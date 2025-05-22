@@ -3,10 +3,34 @@
   <!-- 搜索栏 -->
   <view class="search-container">
     <view class="search-box">
-      <image class="search-icon" src="../../images/search.png"></image>
+      <image class="search-icon" src="../../images/icons/search_grey.png"></image>
       <input class="search-input" placeholder="搜索话题, 问题或人" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearchConfirm" value="{{searchQuery}}" />
       <view class="search-btn" bindtap="onSearchConfirm">搜索</view>
     </view>
+  </view>
+  <!-- 分类筛选 -->
+  <view class="category-filter">
+    <scroll-view scroll-x="true" class="category-scroll">
+      <view class="category-item {{selectedCategory === '' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="">
+        <text>全部</text>
+      </view>
+      <view class="category-item {{selectedCategory === 'question' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="question">
+        <image class="category-icon" src="../../images/icons/admin_orders.png" mode="aspectFit"></image>
+        <text>问题</text>
+      </view>
+      <view class="category-item {{selectedCategory === 'share' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="share">
+        <image class="category-icon" src="../../images/icons/share_grey.png" mode="aspectFit"></image>
+        <text>分享</text>
+      </view>
+      <view class="category-item {{selectedCategory === 'discussion' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="discussion">
+        <image class="category-icon" src="../../images/icons/service_grey.png" mode="aspectFit"></image>
+        <text>讨论</text>
+      </view>
+      <view class="category-item {{selectedCategory === 'suggestion' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="suggestion">
+        <image class="category-icon" src="../../images/icons/admin_settings.png" mode="aspectFit"></image>
+        <text>建议</text>
+      </view>
+    </scroll-view>
   </view>
   <!-- 内容区域 -->
   <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" enable-back-to-top="true" refresher-enabled="true" refresher-triggered="{{isRefreshing}}" bindrefresherrefresh="refreshData">
@@ -17,7 +41,7 @@
     </view>
     <!-- 错误状态 -->
     <view class="error-container" wx:elif="{{hasError}}">
-      <image class="error-icon" src="../../images/error.png" mode="aspectFit"></image>
+      <image class="error-icon" src="../../images/icons/pending_notice.png" mode="aspectFit"></image>
       <text class="error-text">加载失败，请下拉刷新重试</text>
       <view class="error-btn" bindtap="loadPosts">重新加载</view>
     </view>
@@ -28,38 +52,43 @@
           <view class="feed-source">
             <view class="feed-source-left">
               <view class="avatar">
-                <!-- Assuming you have author info; adjust as needed -->
-                <image src="{{item.authorInfo.avatarUrl || '../../images/default-avatar.png'}}"></image>
+                <image src="{{item.authorInfo.avatarUrl || '../../images/icons/profile.png'}}"></image>
               </view>
-              <text class="feed-source-name">{{item.authorInfo.nickName || '匿名用户'}}</text>
-              <!-- <text class="feed-source-txt">{{item.feed_source_txt}}</text> -->
+              <view class="author-info">
+                <text class="feed-source-name">{{item.authorInfo.nickName || '匿名用户'}}</text>
+                <text class="post-time">{{item.createdAt ? formatTime(item.createdAt) : ''}}</text>
+              </view>
             </view>
-            <!-- <image class="item-more" mode="aspectFit" src="../../images/more.png"></image> -->
+            <view class="category-tag {{item.category}}">{{getCategoryName(item.category)}}</view>
           </view>
           <view class="feed-content">
             <view class="question" data-qid="{{item._id}}">
-              <!-- Use post id as question id for now -->
-              <text class="question-text">{{item.topic || ''}}</text>
-              <!-- Display topic or title -->
+              <text class="question-text">{{item.title || item.topic || '无标题'}}</text>
             </view>
             <view class="answer-body" data-aid="{{item._id}}">
-              <!-- Use post id as answer id for now -->
               <text class="answer-text">{{item.content}}</text>
               <!-- Display images if any -->
               <view class="post-images" wx:if="{{item.images && item.images.length > 0}}">
-                <image wx:for="{{item.images}}" wx:for-item="imgUrl" wx:key="*this" src="{{imgUrl}}" mode="aspectFill" class="post-image"></image>
+                <view class="image-grid grid-{{item.images.length > 4 ? 'many' : item.images.length}}">
+                  <block wx:for="{{item.images}}" wx:for-item="imgUrl" wx:key="*this" wx:for-index="imgIndex">
+                    <image wx:if="{{imgIndex < 4 || item.images.length === 5}}" src="{{imgUrl}}" mode="aspectFill" class="post-image" data-src="{{imgUrl}}" data-urls="{{item.images}}" catchtap="previewImage"></image>
+                  </block>
+                </view>
+                <view class="image-count" wx:if="{{item.images.length > 5}}">
+                  +{{item.images.length - 5}} 张图片
+                </view>
               </view>
               <view class="answer-actions">
                 <view class="action-item">
-                  <image class="action-icon" src="../../images/icons/like.png" mode="aspectFit"></image>
+                  <image class="action-icon" src="../../images/icons/favorite_grey.png" mode="aspectFit"></image>
                   <text>{{item.likes || 0}} 赞同</text>
                 </view>
                 <view class="action-item">
-                  <image class="action-icon" src="../../images/icons/comment.png" mode="aspectFit"></image>
+                  <image class="action-icon" src="../../images/icons/service_grey.png" mode="aspectFit"></image>
                   <text>{{item.commentsCount || 0}} 评论</text>
                 </view>
                 <view class="action-item">
-                  <image class="action-icon" src="../../images/icons/share.png" mode="aspectFit"></image>
+                  <image class="action-icon" src="../../images/icons/share_grey.png" mode="aspectFit"></image>
                   <text>分享</text>
                 </view>
               </view>
@@ -78,9 +107,13 @@
       </view>
       <!-- 无帖子/无搜索结果显示 -->
       <view class="no-result" wx:if="{{feed.length === 0 && !isLoading}}">
-        <image class="no-result-icon" src="../../images/no-result.png"></image>
-        <text class="no-result-text">{{searchQuery ? '没有找到相关内容' : '还没有人发帖，快来抢沙发吧！'}}</text>
-        <view class="no-result-btn" bindtap="refreshData" wx:if="{{searchQuery}}">查看全部内容</view>
+        <image class="no-result-icon" src="../../images/icons/empty_cart.png"></image>
+        <text class="no-result-text">
+          {{searchQuery || selectedCategory ? '没有找到相关内容' : '还没有人发帖，快来抢沙发吧！'}}
+        </text>
+        <view class="no-result-btn" bindtap="resetFilters" wx:if="{{searchQuery || selectedCategory}}">
+          查看全部内容
+        </view>
       </view>
     </view>
   </scroll-view>

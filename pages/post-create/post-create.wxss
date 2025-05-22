@@ -1,73 +1,257 @@
 /* pages/post-create/post-create.wxss */
 .page-container {
-  padding: 30rpx;
+  padding: 0;
   background-color: #f8f8f8;
   min-height: 100vh;
-  box-sizing: border-box; /* Ensure padding doesn't add to height */
-  display: flex; /* Helps with full height form */
+  box-sizing: border-box;
+  display: flex;
   flex-direction: column;
+}
+
+.header {
+  background: linear-gradient(135deg, #8cbdb6, #5a9992);
+  padding: 40rpx 30rpx;
+  color: white;
+  border-radius: 0 0 30rpx 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  margin-bottom: 30rpx;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.header-subtitle {
+  font-size: 24rpx;
+  opacity: 0.9;
 }
 
 form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Make form take available space */
+  flex-grow: 1;
+  padding: 0 30rpx 40rpx;
 }
 
 .form-group {
   margin-bottom: 30rpx;
   background-color: #fff;
-  padding: 20rpx;
-  border-radius: 10rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
   box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
 }
 
 .form-group label {
   display: block;
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #333;
-  margin-bottom: 15rpx;
+  margin-bottom: 16rpx;
+  font-weight: 500;
 }
 
-.form-group input, /* Kept for potential future use */
-.form-group .content-textarea { /* Specific class for textarea */
+.form-group input,
+.form-group .content-textarea {
   width: 100%;
-  padding: 15rpx;
+  padding: 20rpx;
   border: 1rpx solid #eee;
-  border-radius: 8rpx;
+  border-radius: 12rpx;
   font-size: 28rpx;
   box-sizing: border-box;
+  background-color: #fafafa;
+}
+
+.form-group input {
+  height: 80rpx;
 }
 
 .content-group {
-  flex-grow: 1; /* Allow content group to expand */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
 .content-textarea {
-  min-height: 300rpx; /* Increased min-height */
-  line-height: 1.5;
-  flex-grow: 1; /* Allow textarea to expand within its group */
+  min-height: 240rpx;
+  line-height: 1.6;
+  flex-grow: 1;
 }
 
-.submit-btn { /* Target by class instead of type */
-  background-color: #07c160; /* WeChat Green */
-  color: white;
-  margin-top: auto; /* Push buttons to the bottom if form grows */
-  margin-bottom: 20rpx;
+/* 分类选择器样式 */
+.category-selector {
+  margin-bottom: 30rpx;
+  background-color: #fff;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
 }
 
-.cancel-btn { /* Target by class instead of type */
-  background-color: #f0f0f0;
+.category-selector label {
+  display: block;
+  font-size: 28rpx;
   color: #333;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150rpx;
+  padding: 16rpx 0;
+  border-radius: 12rpx;
+  background-color: #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.category-item.active {
+  background-color: rgba(140, 189, 182, 0.2);
+  border: 2rpx solid #8cbdb6;
+}
+
+.category-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.category-item text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.category-item.active text {
+  color: #5a9992;
+  font-weight: 500;
+}
+
+/* 图片上传区域样式 */
+.image-upload-section {
+  margin-bottom: 30rpx;
+  background-color: #fff;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.image-upload-section label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.image-item {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+}
+
+.image-item image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-delete {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.image-upload-btn {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 12rpx;
+  border: 2rpx dashed #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.upload-icon {
+  font-size: 48rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+  line-height: 1;
+}
+
+.upload-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.button-group {
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #8cbdb6, #5a9992);
+  color: white;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-weight: 500;
+  box-shadow: 0 4rpx 12rpx rgba(90, 153, 146, 0.3);
+  border: none;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: #666;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border: none;
 }
 
 button[disabled] {
-  background-color: #a0e0b8 !important; /* Lighter green when disabled */
+  background-color: #a0e0b8 !important;
   color: #e0e0e0 !important;
-  opacity: 0.8; /* Keep some opacity to show it's there */
+  opacity: 0.8;
+}
+
+button.cancel-btn[disabled] {
+  background-color: #e0e0e0 !important;
+  color: #999 !important;
 }
 
 .image-upload-placeholder {

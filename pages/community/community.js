@@ -9,6 +9,7 @@ Page({
 		// originalFeed: [], // No longer needed if always fetching from backend
 		feed_length: 0,
 		searchQuery: "", // 搜索关键词
+		selectedCategory: "", // 选中的分类，空字符串表示全部
 		isLoading: true, // Initial loading state
 		hasError: false, // 错误状态
 		isRefreshing: false,
@@ -61,15 +62,25 @@ Page({
 			this.setData({ loadingMore: true });
 		}
 
+		const requestData = {
+			page: this.data.currentPage,
+			pageSize: this.data.pageSize,
+		};
+
+		// 添加分类筛选
+		if (this.data.selectedCategory) {
+			requestData.category = this.data.selectedCategory;
+		}
+
+		// 添加搜索关键词
+		if (this.data.searchQuery) {
+			requestData.searchQuery = this.data.searchQuery;
+		}
+
 		wx.cloud
 			.callFunction({
 				name: "getPosts",
-				data: {
-					page: this.data.currentPage,
-					pageSize: this.data.pageSize,
-					// topic: null, // Add if topic filtering is needed
-					// userId: null // Add if user-specific posts are needed
-				},
+				data: requestData,
 			})
 			.then((res) => {
 				if (res.result && res.result.success) {
@@ -152,9 +163,13 @@ Page({
 		this.setData({
 			searchQuery: e.detail.value,
 		});
-		// If search query is cleared, reload all posts or implement local filtering if posts are already loaded
+		// 如果搜索框清空，重置搜索
 		if (!e.detail.value.trim()) {
-			this.setData({ currentPage: 1, noMoreData: false });
+			this.setData({
+				searchQuery: "",
+				currentPage: 1,
+				noMoreData: false,
+			});
 			this.loadPosts(true);
 		}
 	},
@@ -163,81 +178,106 @@ Page({
 	 * 搜索确认事件
 	 */
 	onSearchConfirm: function () {
-		const query = this.data.searchQuery.trim().toLowerCase();
+		const query = this.data.searchQuery.trim();
 		if (!query) {
-			this.setData({ currentPage: 1, noMoreData: false });
-			this.loadPosts(true); // Reload all if query is empty
+			this.setData({
+				searchQuery: "",
+				currentPage: 1,
+				noMoreData: false,
+			});
+			this.loadPosts(true); // 搜索为空时重新加载所有帖子
 			return;
 		}
 
-		// Implement search by calling a modified getPosts or a new searchPosts cloud function
-		// For now, let's assume getPosts can handle a search query or we add a new function
+		// 执行搜索
 		this.setData({
 			isLoading: true,
 			currentPage: 1,
 			noMoreData: false,
 			feed: [],
 		});
-		wx.cloud
-			.callFunction({
-				name: "getPosts", // Or a new 'searchPosts' function
-				data: {
-					page: 1,
-					pageSize: this.data.pageSize,
-					searchQuery: query, // Pass search query to backend
-				},
-			})
-			.then((res) => {
-				if (res.result && res.result.success) {
-					const searchResults = res.result.data || [];
-					this.setData({
-						feed: searchResults,
-						feed_length: searchResults.length,
-						totalPages: res.result.pagination.totalPages,
-						currentPage: 2, // Ready for next page if results exist
-						noMoreData:
-							searchResults.length < this.data.pageSize ||
-							1 >= res.result.pagination.totalPages,
-						hasError: false,
-					});
-					if (searchResults.length === 0) {
-						wx.showToast({
-							title: "没有找到相关内容",
-							icon: "none",
-						});
-					}
-				} else {
-					this.setData({ hasError: true, feed: [] });
-					wx.showToast({
-						title: res.result ? res.result.message : "搜索失败",
-						icon: "none",
-					});
-				}
-			})
-			.catch((err) => {
-				console.error("Error during search:", err);
-				this.setData({ hasError: true, feed: [] });
-				wx.showToast({
-					title: "搜索出错，请重试",
-					icon: "none",
-				});
-			})
-			.finally(() => {
-				this.setData({ isLoading: false });
-			});
+
+		this.loadPosts(true);
 	},
 
-	//network请求数据, 实现首页刷新 (This seems like a duplicate or old function)
-	// refresh0: function(){
-	//   var index_api = '';
-	//   util.getData(index_api)
-	//       .then(function(data){
-	//         //this.setData({
-	//         //
-	//         //});
-	//         console.log(data);
-	//       });
-	// },
+	/**
+	 * 分类筛选事件
+	 */
+	onCategoryFilter: function (e) {
+		const category = e.currentTarget.dataset.category;
+		this.setData({
+			selectedCategory: category,
+			currentPage: 1,
+			noMoreData: false,
+			feed: [],
+			isLoading: true,
+		});
+
+		this.loadPosts(true);
+	},
+
+	/**
+	 * 重置筛选条件
+	 */
+	resetFilters: function () {
+		this.setData({
+			searchQuery: "",
+			selectedCategory: "",
+			currentPage: 1,
+			noMoreData: false,
+			feed: [],
+			isLoading: true,
+		});
+
+		this.loadPosts(true);
+	},
+
+	/**
+	 * 图片预览
+	 */
+	previewImage: function (e) {
+		const src = e.currentTarget.dataset.src;
+		const urls = e.currentTarget.dataset.urls;
+
+		wx.previewImage({
+			current: src,
+			urls: urls,
+		});
+	},
+
+	/**
+	 * 格式化时间
+	 */
+	formatTime: function (timestamp) {
+		if (!timestamp) return "";
+
+		let date;
+		if (timestamp instanceof Date) {
+			date = timestamp;
+		} else if (timestamp.hasOwnProperty("$date")) {
+			// 处理MongoDB日期格式
+			date = new Date(timestamp.$date);
+		} else {
+			// 处理普通时间戳
+			date = new Date(timestamp);
+		}
+
+		return util.formatTime(date);
+	},
+
+	/**
+	 * 获取分类名称
+	 */
+	getCategoryName: function (category) {
+		const categoryMap = {
+			question: "问题",
+			share: "分享",
+			discussion: "讨论",
+			suggestion: "建议",
+		};
+
+		return categoryMap[category] || "分享";
+	},
 
 	// 点击发布按钮
 	onPostTap: function () {

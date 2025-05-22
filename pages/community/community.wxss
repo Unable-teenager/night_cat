@@ -7,7 +7,7 @@
 }
 
 .container {
-  height: calc(100vh - 120rpx);
+  height: calc(100vh - 180rpx);
   padding: 0;
   font-size: 14rpx;
   color: #333;
@@ -21,7 +21,6 @@
   top: 0;
   z-index: 100;
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
-  border-radius: 0 0 20rpx 20rpx;
 }
 
 .search-box {
@@ -53,6 +52,53 @@
   line-height: 60rpx;
   font-size: 28rpx;
   color: #527865;
+  font-weight: 500;
+}
+
+/* 分类筛选样式 */
+.category-filter {
+  padding: 16rpx 0;
+  background-color: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 16rpx;
+}
+
+.category-scroll {
+  white-space: nowrap;
+  padding: 0 20rpx;
+}
+
+.category-filter .category-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 24rpx;
+  margin-right: 16rpx;
+  border-radius: 12rpx;
+  background-color: #f5f5f5;
+  transition: all 0.3s;
+}
+
+.category-filter .category-item.active {
+  background-color: rgba(140, 189, 182, 0.2);
+  border: 2rpx solid #8cbdb6;
+}
+
+.category-filter .category-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-bottom: 8rpx;
+}
+
+.category-filter .category-item text {
+  font-size: 24rpx;
+  color: #666;
+  white-space: nowrap;
+}
+
+.category-filter .category-item.active text {
+  color: #5a9992;
   font-weight: 500;
 }
 
@@ -181,16 +227,45 @@
   height: 100%;
 }
 
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .feed-source-name {
   font-size: 28rpx;
   font-weight: 600;
   color: #333;
+  margin-bottom: 4rpx;
 }
 
-.item-more {
-  width: 40rpx;
-  height: 40rpx;
-  opacity: 0.6;
+.post-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.category-tag {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  background: #8cbdb6;
+}
+
+.category-tag.question {
+  background: #f0ad4e;
+}
+
+.category-tag.share {
+  background: #5bc0de;
+}
+
+.category-tag.discussion {
+  background: #8cbdb6;
+}
+
+.category-tag.suggestion {
+  background: #d9534f;
 }
 
 .feed-content {
@@ -221,6 +296,51 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
   margin-bottom: 20rpx;
+}
+
+/* 图片网格样式 */
+.post-images {
+  margin: 20rpx 0;
+}
+
+.image-grid {
+  display: grid;
+  grid-gap: 8rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid-2, .grid-4 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-many {
+  grid-template-columns: 1fr 1fr;
+}
+
+.post-image {
+  width: 100%;
+  height: 200rpx;
+  object-fit: cover;
+}
+
+.grid-1 .post-image {
+  height: 360rpx;
+}
+
+.image-count {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+  text-align: right;
 }
 
 .answer-actions {
@@ -272,6 +392,14 @@
   color: #fff;
   font-size: 28rpx;
   border-radius: 40rpx;
+}
+
+/* 无更多数据 */
+.no-more-data {
+  text-align: center;
+  padding: 30rpx 0;
+  color: #999;
+  font-size: 24rpx;
 }
 
 /* 发布帖子按钮 */
