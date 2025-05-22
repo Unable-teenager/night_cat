@@ -9,7 +9,7 @@ const db = cloud.database();
 // 云函数入口函数
 exports.main = async (event, context) => {
 	const wxContext = cloud.getWXContext();
-	const { content, images, videos, topic } = event; // Post content, optional images/videos, optional topic
+	const { content } = event; // Only expect content for now
 
 	if (!content || content.trim() === "") {
 		return {
@@ -25,9 +25,9 @@ exports.main = async (event, context) => {
 				_openid: wxContext.OPENID, // User's openid
 				authorId: wxContext.OPENID, // Or a custom user ID if you have one
 				content: content,
-				images: images || [], // Array of image fileIDs
-				videos: videos || [], // Array of video fileIDs
-				topic: topic || null, // Optional topic
+				images: [], // Default to empty array for now
+				videos: [], // Default to empty array for now
+				topic: null, // Default to null for now
 				createdAt: db.serverDate(),
 				updatedAt: db.serverDate(),
 				status: "approved", // Default status, can be 'pending_review' for admin approval

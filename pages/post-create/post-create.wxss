@@ -3,6 +3,16 @@
   padding: 30rpx;
   background-color: #f8f8f8;
   min-height: 100vh;
+  box-sizing: border-box; /* Ensure padding doesn't add to height */
+  display: flex; /* Helps with full height form */
+  flex-direction: column;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Make form take available space */
 }
 
 .form-group {
@@ -20,8 +30,8 @@
   margin-bottom: 15rpx;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group input, /* Kept for potential future use */
+.form-group .content-textarea { /* Specific class for textarea */
   width: 100%;
   padding: 15rpx;
   border: 1rpx solid #eee;
@@ -30,9 +40,34 @@
   box-sizing: border-box;
 }
 
-.form-group textarea {
-  min-height: 200rpx;
+.content-group {
+  flex-grow: 1; /* Allow content group to expand */
+  display: flex;
+  flex-direction: column;
+}
+
+.content-textarea {
+  min-height: 300rpx; /* Increased min-height */
   line-height: 1.5;
+  flex-grow: 1; /* Allow textarea to expand within its group */
+}
+
+.submit-btn { /* Target by class instead of type */
+  background-color: #07c160; /* WeChat Green */
+  color: white;
+  margin-top: auto; /* Push buttons to the bottom if form grows */
+  margin-bottom: 20rpx;
+}
+
+.cancel-btn { /* Target by class instead of type */
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+button[disabled] {
+  background-color: #a0e0b8 !important; /* Lighter green when disabled */
+  color: #e0e0e0 !important;
+  opacity: 0.8; /* Keep some opacity to show it's there */
 }
 
 .image-upload-placeholder {
@@ -41,19 +76,4 @@
   color: #999;
   padding: 40rpx;
   font-size: 26rpx;
-}
-
-button[type="primary"] {
-  background-color: #07c160; /* WeChat Green */
-  color: white;
-  margin-bottom: 20rpx;
-}
-
-button[type="default"] {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-button[disabled] {
-  opacity: 0.6;
 } 
