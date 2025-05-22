@@ -1,74 +1,75 @@
 {
-  "pages": [
-    "pages/login/login",
-    "pages/home/home",
-    "pages/community/community",
-    "pages/mall/mall",
-    "pages/product-detail/product-detail",
-    "pages/cart/cart",
-    "pages/order/order",
-    "pages/order-confirm/order-confirm",
-    "pages/profile/profile",
-    "pages/profile-edit/profile-edit",
-    "pages/address-list/address-list",
-    "pages/address-edit/address-edit",
-    "pages/admin/dashboard/dashboard",
-    "pages/admin/product-manage/product-manage",
-    "pages/admin/product-edit/product-edit",
-    "pages/admin/carousel-manage/carousel-manage",
-    "pages/admin/carousel-edit/carousel-edit",
-    "pages/admin/category-manage/category-manage",
-    "pages/category-products/category-products",
-    "pages/discovery/discovery",
+	"pages": [
+		"pages/login/login",
+		"pages/home/home",
+		"pages/community/community",
+		"pages/mall/mall",
+		"pages/product-detail/product-detail",
+		"pages/cart/cart",
+		"pages/order/order",
+		"pages/order-confirm/order-confirm",
+		"pages/profile/profile",
+		"pages/profile-edit/profile-edit",
+		"pages/address-list/address-list",
+		"pages/address-edit/address-edit",
+		"pages/admin/dashboard/dashboard",
+		"pages/admin/product-manage/product-manage",
+		"pages/admin/product-edit/product-edit",
+		"pages/admin/carousel-manage/carousel-manage",
+		"pages/admin/carousel-edit/carousel-edit",
+		"pages/admin/category-manage/category-manage",
+		"pages/category-products/category-products",
+		"pages/discovery/discovery",
 		"pages/dc_essay/dc_essay",
-		"pages/dc_video/dc_video"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#1296db",
-    "navigationBarTitleText": "夜猫修复铺",
-    "navigationBarTextStyle": "white"
-  },
-  "tabBar": {
-    "color": "#8a8a8a",
-    "selectedColor": "#1296db",
-    "backgroundColor": "#ffffff",
-    "borderStyle": "black",
-    "list": [
-      {
-        "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "images/icons/home.png",
-        "selectedIconPath": "images/icons/home_selected.png"
-      },
-      {
-        "pagePath": "pages/community/community",
-        "text": "社区",
-        "iconPath": "images/icons/community.png",
-        "selectedIconPath": "images/icons/community_selected.png"
-      },
-      {
+		"pages/dc_video/dc_video",
+		"pages/post-create/post-create"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#1296db",
+		"navigationBarTitleText": "夜猫修复铺",
+		"navigationBarTextStyle": "white"
+	},
+	"tabBar": {
+		"color": "#8a8a8a",
+		"selectedColor": "#1296db",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/home/home",
+				"text": "首页",
+				"iconPath": "images/icons/home.png",
+				"selectedIconPath": "images/icons/home_selected.png"
+			},
+			{
+				"pagePath": "pages/community/community",
+				"text": "社区",
+				"iconPath": "images/icons/community.png",
+				"selectedIconPath": "images/icons/community_selected.png"
+			},
+			{
 				"pagePath": "pages/discovery/discovery",
 				"text": "发现",
 				"iconPath": "images/icons/discovery.png",
 				"selectedIconPath": "images/icons/discovery_selected.png"
 			},
-      {
-        "pagePath": "pages/mall/mall",
-        "text": "商城",
-        "iconPath": "images/icons/mall.png",
-        "selectedIconPath": "images/icons/mall_selected.png"
-      },
-      {
-        "pagePath": "pages/profile/profile",
-        "text": "我的",
-        "iconPath": "images/icons/profile.png",
-        "selectedIconPath": "images/icons/profile_selected.png"
-      }
-    ]
-  },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents",
-  "usingComponents": {}
-} 
+			{
+				"pagePath": "pages/mall/mall",
+				"text": "商城",
+				"iconPath": "images/icons/mall.png",
+				"selectedIconPath": "images/icons/mall_selected.png"
+			},
+			{
+				"pagePath": "pages/profile/profile",
+				"text": "我的",
+				"iconPath": "images/icons/profile.png",
+				"selectedIconPath": "images/icons/profile_selected.png"
+			}
+		]
+	},
+	"style": "v2",
+	"sitemapLocation": "sitemap.json",
+	"lazyCodeLoading": "requiredComponents",
+	"usingComponents": {}
+}
