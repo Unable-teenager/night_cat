@@ -1,0 +1,21 @@
+<!-- pages/post-create/post-create.wxml -->
+<view class="page-container">
+    <form bindsubmit="onSubmitPost">
+        <view class="form-group">
+            <label for="topic">话题 (可选)</label>
+            <input id="topic" name="topic" placeholder="例如：#健康饮食#" value="{{topic}}" bindinput="onTopicInput" />
+        </view>
+        <view class="form-group">
+            <label for="content">内容</label>
+            <textarea id="content" name="content" placeholder="分享你的想法和经验..." maxlength="-1" value="{{content}}" bindinput="onContentInput"></textarea>
+        </view>
+        <!-- TODO: Add image/video upload functionality here -->
+        <view class="form-group image-upload-placeholder">
+            <text>图片/视频上传 (待实现)</text>
+        </view>
+        <button form-type="submit" type="primary" loading="{{isSubmitting}}" disabled="{{isSubmitting || !content.trim()}}">
+            发布
+        </button>
+        <button type="default" bindtap="onCancel" disabled="{{isSubmitting}}">取消</button>
+    </form>
+</view>

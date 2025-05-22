@@ -1,0 +1,14 @@
+{
+	"name": "adminDeletePost",
+	"version": "1.0.0",
+	"description": "Admin cloud function to delete a community post.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"wx-server-sdk": "^2.6.0"
+	}
+}

@@ -30,7 +30,12 @@
     "include": []
   },
   "appid": "wx4aeaf8099581983d",
-  "editorSetting": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
   "cloudfunctionRoot": "cloudfunctions/",
-  "libVersion": "3.8.5"
+  "libVersion": "3.8.5",
+  "condition": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

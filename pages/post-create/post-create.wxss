@@ -1,0 +1,59 @@
+/* pages/post-create/post-create.wxss */
+.page-container {
+  padding: 30rpx;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+  background-color: #fff;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.form-group label {
+  display: block;
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15rpx;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  min-height: 200rpx;
+  line-height: 1.5;
+}
+
+.image-upload-placeholder {
+  border: 2rpx dashed #ccc;
+  text-align: center;
+  color: #999;
+  padding: 40rpx;
+  font-size: 26rpx;
+}
+
+button[type="primary"] {
+  background-color: #07c160; /* WeChat Green */
+  color: white;
+  margin-bottom: 20rpx;
+}
+
+button[type="default"] {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+button[disabled] {
+  opacity: 0.6;
+} 
