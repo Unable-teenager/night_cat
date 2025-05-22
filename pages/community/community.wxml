@@ -19,7 +19,7 @@
         <text>问题</text>
       </view>
       <view class="category-item {{selectedCategory === 'share' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="share">
-        <image class="category-icon" src="../../images/icons/share_grey.png" mode="aspectFit"></image>
+        <image class="category-icon" src="../../images/icons/share.png" mode="aspectFit"></image>
         <text>分享</text>
       </view>
       <view class="category-item {{selectedCategory === 'discussion' ? 'active' : ''}}" bindtap="onCategoryFilter" data-category="discussion">
@@ -79,18 +79,18 @@
                 </view>
               </view>
               <view class="answer-actions">
-                <view class="action-item">
-                  <image class="action-icon" src="../../images/icons/favorite_grey.png" mode="aspectFit"></image>
+                <view class="action-item {{item.isLiked ? 'active' : ''}}" catchtap="handleLike" data-id="{{item._id}}">
+                  <image class="action-icon" src="{{item.isLiked ? '../../images/icons/favorite.png' : '../../images/icons/favorite_grey.png'}}" mode="aspectFit"></image>
                   <text>{{item.likes || 0}} 赞同</text>
                 </view>
-                <view class="action-item">
+                <view class="action-item" catchtap="goToComments" data-id="{{item._id}}">
                   <image class="action-icon" src="../../images/icons/service_grey.png" mode="aspectFit"></image>
                   <text>{{item.commentsCount || 0}} 评论</text>
                 </view>
-                <view class="action-item">
-                  <image class="action-icon" src="../../images/icons/share_grey.png" mode="aspectFit"></image>
+                <button class="action-item share-btn" open-type="share" data-id="{{item._id}}">
+                  <image class="action-icon" src="../../images/icons/share.png" mode="aspectFit"></image>
                   <text>分享</text>
-                </view>
+                </button>
               </view>
             </view>
           </view>

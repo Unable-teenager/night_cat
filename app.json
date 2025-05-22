@@ -22,7 +22,8 @@
 		"pages/discovery/discovery",
 		"pages/dc_essay/dc_essay",
 		"pages/dc_video/dc_video",
-		"pages/post-create/post-create"
+		"pages/post-create/post-create",
+		"pages/post-detail/post-detail"
 	],
 	"window": {
 		"backgroundTextStyle": "light",

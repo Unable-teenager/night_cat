@@ -1,0 +1,102 @@
+<!-- pages/post-detail/post-detail.wxml -->
+<view class="page-container">
+    <!-- 加载状态 -->
+    <view class="loading-container" wx:if="{{isLoading}}">
+        <view class="loading-spinner"></view>
+        <text class="loading-text">正在加载...</text>
+    </view>
+    <!-- 错误状态 -->
+    <view class="error-container" wx:elif="{{hasError}}">
+        <image class="error-icon" src="../../images/icons/pending_notice.png" mode="aspectFit"></image>
+        <text class="error-text">加载失败，请下拉刷新重试</text>
+        <view class="error-btn" bindtap="loadPostDetail">重新加载</view>
+    </view>
+    <!-- 帖子详情 -->
+    <view class="post-detail" wx:elif="{{post}}">
+        <!-- 帖子头部 -->
+        <view class="post-header">
+            <view class="author-info">
+                <image class="avatar" src="{{post.authorInfo.avatarUrl || '../../images/icons/profile.png'}}"></image>
+                <view class="author-detail">
+                    <text class="author-name">{{post.authorInfo.nickName || '匿名用户'}}</text>
+                    <text class="post-time">
+                        {{post.createdAt ? formatTime(post.createdAt) : ''}}
+                    </text>
+                </view>
+            </view>
+            <view class="category-tag {{post.category}}">{{getCategoryName(post.category)}}</view>
+        </view>
+        <!-- 帖子内容 -->
+        <view class="post-content">
+            <view class="post-title">{{post.title || post.topic || '无标题'}}</view>
+            <text class="post-text">{{post.content}}</text>
+            <!-- 图片内容 -->
+            <view class="post-images" wx:if="{{post.images && post.images.length > 0}}">
+                <block wx:for="{{post.images}}" wx:for-item="imgUrl" wx:key="*this" wx:for-index="imgIndex">
+                    <image src="{{imgUrl}}" mode="widthFix" class="post-image" data-src="{{imgUrl}}" data-urls="{{post.images}}" catchtap="previewImage"></image>
+                </block>
+            </view>
+        </view>
+        <!-- 帖子操作 -->
+        <view class="post-actions">
+            <view class="action-item {{isLiked ? 'active' : ''}}" bindtap="handleLike">
+                <image class="action-icon" src="{{isLiked ? '../../images/icons/favorite.png' : '../../images/icons/favorite_grey.png'}}" mode="aspectFit"></image>
+                <text>{{post.likes || 0}} 赞同</text>
+            </view>
+            <view class="action-item">
+                <image class="action-icon" src="../../images/icons/service_grey.png" mode="aspectFit"></image>
+                <text>{{post.commentsCount || 0}} 评论</text>
+            </view>
+            <button class="action-item share-btn" open-type="share">
+                <image class="action-icon" src="../../images/icons/share.png" mode="aspectFit"></image>
+                <text>分享</text>
+            </button>
+        </view>
+        <!-- 评论区域 -->
+        <view class="comments-section">
+            <view class="section-title">评论 ({{post.commentsCount || 0}})</view>
+            <!-- 评论列表 -->
+            <view class="comments-list" wx:if="{{comments.length > 0}}">
+                <view class="comment-item" wx:for="{{comments}}" wx:key="_id">
+                    <view class="comment-user">
+                        <image class="comment-avatar" src="{{item.authorInfo.avatarUrl || '../../images/icons/profile.png'}}"></image>
+                        <view class="comment-user-info">
+                            <text class="comment-username">
+                                {{item.authorInfo.nickName || '匿名用户'}}
+                            </text>
+                            <text class="comment-time">
+                                {{item.createdAt ? formatTime(item.createdAt) : ''}}
+                            </text>
+                        </view>
+                    </view>
+                    <text class="comment-content">{{item.content}}</text>
+                </view>
+                <!-- 加载更多评论 -->
+                <view class="loading-more" wx:if="{{loadingMoreComments}}">
+                    <view class="loading-spinner small"></view>
+                    <text>正在加载更多...</text>
+                </view>
+                <!-- 无更多评论 -->
+                <view class="no-more-data" wx:if="{{noMoreComments && !loadingMoreComments}}">
+                    <text>没有更多评论了</text>
+                </view>
+            </view>
+            <!-- 无评论状态 -->
+            <view class="no-comments" wx:elif="{{!commentsLoading}}">
+                <text>暂无评论，发表第一条评论吧！</text>
+            </view>
+            <!-- 评论加载中 -->
+            <view class="loading-container small" wx:if="{{commentsLoading}}">
+                <view class="loading-spinner small"></view>
+                <text class="loading-text">加载评论中...</text>
+            </view>
+        </view>
+    </view>
+    <!-- 评论输入区域 -->
+    <view class="comment-input-area">
+        <input class="comment-input" placeholder="写下你的评论..." value="{{commentContent}}" bindinput="handleCommentInput" confirm-type="send" />
+        <view class="submit-btn {{commentContent.trim() ? 'active' : ''}}" bindtap="submitComment">
+            发送
+        </view>
+    </view>
+</view>

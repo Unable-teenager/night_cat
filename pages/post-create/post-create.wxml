@@ -17,7 +17,7 @@
                     <text>问题</text>
                 </view>
                 <view class="category-item {{selectedCategory === 'share' ? 'active' : ''}}" bindtap="onCategorySelect" data-category="share">
-                    <image class="category-icon" src="../../images/icons/share_grey.png" mode="aspectFit"></image>
+                    <image class="category-icon" src="../../images/icons/share.png" mode="aspectFit"></image>
                     <text>分享</text>
                 </view>
                 <view class="category-item {{selectedCategory === 'discussion' ? 'active' : ''}}" bindtap="onCategorySelect" data-category="discussion">

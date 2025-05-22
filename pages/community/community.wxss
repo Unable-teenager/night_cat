@@ -194,6 +194,7 @@
   box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .feed-item-hover {
@@ -270,6 +271,9 @@
 
 .feed-content {
   padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .question {
@@ -308,6 +312,8 @@
   grid-gap: 8rpx;
   border-radius: 8rpx;
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .grid-1 {
@@ -330,6 +336,7 @@
   width: 100%;
   height: 200rpx;
   object-fit: cover;
+  box-sizing: border-box;
 }
 
 .grid-1 .post-image {
@@ -348,6 +355,7 @@
   justify-content: space-between;
   padding-top: 20rpx;
   border-top: 1rpx solid #eee;
+  flex-wrap: wrap;
 }
 
 .action-item {
@@ -355,6 +363,30 @@
   align-items: center;
   font-size: 24rpx;
   color: #888;
+  padding: 10rpx;
+  transition: all 0.3s;
+  border-radius: 8rpx;
+}
+
+.action-item.active {
+  color: #ff6b6b;
+}
+
+.share-btn {
+  background: transparent;
+  line-height: normal;
+  border: none;
+  padding: 10rpx;
+  margin: 0;
+  font-size: 24rpx;
+  color: #888;
+  display: flex;
+  align-items: center;
+  border-radius: 8rpx;
+}
+
+.share-btn::after {
+  border: none;
 }
 
 .action-icon {

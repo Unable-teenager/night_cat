@@ -16,8 +16,64 @@ exports.main = async (event, context) => {
 		userId = null,
 		category = null,
 		searchQuery = null,
+		postId = null,
 	} = event;
 	const skip = (page - 1) * pageSize;
+
+	// 如果提供了帖子ID，直接获取特定帖子
+	if (postId) {
+		try {
+			const postRes = await db.collection("posts").doc(postId).get();
+
+			if (!postRes.data) {
+				return {
+					success: false,
+					message: "Post not found",
+				};
+			}
+
+			// 获取作者信息
+			let post = postRes.data;
+			if (!post.authorInfo && post._openid) {
+				const userRes = await db
+					.collection("users")
+					.where({
+						_openid: post._openid,
+					})
+					.get();
+
+				if (userRes.data.length > 0) {
+					post.authorInfo = {
+						nickName: userRes.data[0].nickName || "用户",
+						avatarUrl: userRes.data[0].avatarUrl || "",
+					};
+				} else {
+					post.authorInfo = {
+						nickName: "用户",
+						avatarUrl: "",
+					};
+				}
+			}
+
+			return {
+				success: true,
+				data: [post],
+				pagination: {
+					currentPage: 1,
+					pageSize: 1,
+					total: 1,
+					totalPages: 1,
+				},
+			};
+		} catch (e) {
+			console.error("Error fetching post by ID:", e);
+			return {
+				success: false,
+				message: "Failed to fetch post",
+				error: e,
+			};
+		}
+	}
 
 	let query = { status: "approved" }; // Only fetch approved posts by default
 

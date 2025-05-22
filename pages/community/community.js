@@ -18,6 +18,8 @@ Page({
 		pageSize: 10, // For pagination
 		totalPages: 1, // For pagination
 		noMoreData: false, // To indicate if all posts are loaded
+		userInfo: null,
+		isLoggedIn: false,
 	},
 	//事件处理函数
 	bindItemTap: function (e) {
@@ -36,6 +38,11 @@ Page({
 	},
 	onLoad: function () {
 		console.log("onLoad community");
+		// 获取用户信息
+		this.setData({
+			userInfo: app.globalData.userInfo || null,
+			isLoggedIn: !!app.globalData.userInfo,
+		});
 		this.loadPosts(true); // Load initial posts
 	},
 	// 下拉刷新
@@ -99,6 +106,11 @@ Page({
 							this.data.currentPage > res.result.pagination.totalPages,
 						hasError: false,
 					});
+
+					// 如果用户已登录，检查每个帖子的点赞状态
+					if (this.data.isLoggedIn && updatedFeed.length > 0) {
+						this.checkPostsLikeStatus(updatedFeed);
+					}
 				} else {
 					console.error(
 						"Failed to load posts:",
@@ -129,6 +141,43 @@ Page({
 					wx.stopPullDownRefresh();
 				}
 				wx.hideNavigationBarLoading();
+			});
+	},
+
+	// 检查帖子的点赞状态
+	checkPostsLikeStatus: function (posts) {
+		if (!this.data.isLoggedIn || !posts || posts.length === 0) return;
+
+		// 获取所有帖子ID
+		const postIds = posts.map((post) => post._id);
+
+		// 批量检查点赞状态
+		Promise.all(
+			postIds.map((postId) =>
+				wx.cloud.callFunction({
+					name: "checkPostLiked",
+					data: { postId },
+				}),
+			),
+		)
+			.then((results) => {
+				const feed = [...this.data.feed];
+
+				results.forEach((res, index) => {
+					if (res.result && res.result.success) {
+						const postIndex = feed.findIndex(
+							(post) => post._id === postIds[index],
+						);
+						if (postIndex !== -1) {
+							feed[postIndex].isLiked = res.result.liked;
+						}
+					}
+				});
+
+				this.setData({ feed });
+			})
+			.catch((err) => {
+				console.error("Error checking posts like status:", err);
 			});
 	},
 
@@ -286,10 +335,99 @@ Page({
 		});
 	},
 
+	// 处理点赞/取消点赞
+	handleLike: function (e) {
+		// 阻止事件冒泡，防止触发帖子详情页面跳转
+		e.stopPropagation();
+
+		if (!this.data.isLoggedIn) {
+			wx.showToast({
+				title: "请先登录",
+				icon: "none",
+			});
+			return;
+		}
+
+		const postId = e.currentTarget.dataset.id;
+		if (!postId) return;
+
+		wx.cloud
+			.callFunction({
+				name: "likePost",
+				data: {
+					postId: postId,
+				},
+			})
+			.then((res) => {
+				if (res.result && res.result.success) {
+					// 更新本地状态
+					const feed = [...this.data.feed];
+					const postIndex = feed.findIndex((item) => item._id === postId);
+
+					if (postIndex !== -1) {
+						feed[postIndex].likes = feed[postIndex].likes || 0;
+
+						if (res.result.liked) {
+							feed[postIndex].likes += 1;
+							feed[postIndex].isLiked = true;
+						} else {
+							feed[postIndex].likes = Math.max(0, feed[postIndex].likes - 1);
+							feed[postIndex].isLiked = false;
+						}
+
+						this.setData({
+							feed: feed,
+						});
+					}
+				} else {
+					wx.showToast({
+						title: "操作失败，请重试",
+						icon: "none",
+					});
+				}
+			})
+			.catch((err) => {
+				console.error("Error liking post:", err);
+				wx.showToast({
+					title: "网络错误，请重试",
+					icon: "none",
+				});
+			});
+	},
+
+	// 跳转到评论页面
+	goToComments: function (e) {
+		// 阻止事件冒泡，防止触发帖子详情页面跳转
+		e.stopPropagation();
+
+		const postId = e.currentTarget.dataset.id;
+		if (!postId) return;
+
+		wx.navigateTo({
+			url: `../post-detail/post-detail?id=${postId}`,
+		});
+	},
+
 	/**
 	 * 用户点击右上角分享
 	 */
-	onShareAppMessage: function () {
+	onShareAppMessage: function (res) {
+		if (res.from === "button") {
+			// 来自页面内转发按钮
+			const postIndex = this.data.feed.findIndex(
+				(item) => item._id === res.target.dataset.id,
+			);
+			if (postIndex !== -1) {
+				const post = this.data.feed[postIndex];
+				return {
+					title: post.title || post.topic || "社区分享",
+					path: `/pages/post-detail/post-detail?id=${post._id}`,
+					imageUrl: post.images && post.images.length > 0 ? post.images[0] : "",
+				};
+			}
+		}
+
+		// 默认分享
 		return {
 			title: "社区 - 分享健康养生经验",
 			path: "/pages/community/community",
