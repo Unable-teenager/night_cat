@@ -1,0 +1,50 @@
+<!--pages/address-edit/address-edit.wxml-->
+<view class="address-edit-container">
+  <form bindsubmit="submitForm">
+    <!-- 联系人信息 -->
+    <view class="form-section">
+      <view class="form-item">
+        <text class="form-label">收货人</text>
+        <input class="form-input" name="name" placeholder="请输入收货人姓名" value="{{address.name}}" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">手机号码</text>
+        <input class="form-input" type="number" name="phone" placeholder="请输入收货人手机号" value="{{address.phone}}" maxlength="11" />
+      </view>
+    </view>
+
+    <!-- 地址信息 -->
+    <view class="form-section">
+      <view class="form-item">
+        <text class="form-label">省份</text>
+        <input class="form-input" name="province" placeholder="请输入省份" value="{{address.province}}" bindinput="onInputChange" data-field="province" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">城市</text>
+        <input class="form-input" name="city" placeholder="请输入城市" value="{{address.city}}" bindinput="onInputChange" data-field="city" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">区/县</text>
+        <input class="form-input" name="district" placeholder="请输入区或县" value="{{address.district}}" bindinput="onInputChange" data-field="district" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">详细地址</text>
+        <textarea class="form-textarea" name="detail" placeholder="请输入详细地址，如街道、门牌号、小区、楼栋号、单元室等" value="{{address.detail}}"></textarea>
+      </view>
+    </view>
+
+    <!-- 设为默认地址 -->
+    <view class="form-section">
+      <view class="form-item">
+        <text class="form-label">设为默认地址</text>
+        <switch name="isDefault" color="#ff5000" checked="{{address.isDefault}}" />
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <button class="submit-btn" form-type="submit">保存</button>
+    
+    <!-- 删除按钮 (仅编辑时显示) -->
+    <button class="delete-btn" wx:if="{{isEdit}}" bindtap="deleteAddress">删除此地址</button>
+  </form>
+</view>

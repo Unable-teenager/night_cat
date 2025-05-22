@@ -1,0 +1,33 @@
+<view class="container product-manage-container">
+  <view class="header-actions">
+    <button class="add-btn" type="primary" size="mini" bindtap="navigateToAddProduct">添加商品</button>
+    <input class="search-input" placeholder="搜索商品名称" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearchConfirm"/>
+  </view>
+
+  <scroll-view scroll-y class="product-list-scroll" bindscrolltolower="loadMoreProducts">
+    <block wx:if="{{products.length > 0}}">
+      <view class="product-item" wx:for="{{products}}" wx:key="_id">
+        <image class="product-image" src="{{item.mainImageUrl || '/images/default_product.png'}}" mode="aspectFill"></image>
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
+          <text class="product-price">¥{{item.price}}</text>
+          <text class="product-stock">库存: {{item.stock}}</text>
+          <text class="product-status {{item.isActive ? 'active' : 'inactive'}}">{{item.isActive ? '已上架' : '已下架'}}</text>
+        </view>
+        <view class="product-actions">
+          <button size="mini" bindtap="navigateToEditProduct" data-id="{{item._id}}">编辑</button>
+          <button size="mini" type="warn" bindtap="deleteProduct" data-id="{{item._id}}" data-name="{{item.name}}">删除</button>
+          <button size="mini" bindtap="toggleProductStatus" data-id="{{item._id}}" data-status="{{item.isActive}}">
+            {{item.isActive ? '下架' : '上架'}}
+          </button>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-list">
+      <image src="/images/icons/empty_box.png" class="empty-icon"></image>
+      <text>暂无商品，快去添加吧！</text>
+    </view>
+    <view class="loading-more" wx:if="{{isLoadingMore}}">正在加载更多...</view>
+    <view class="no-more" wx:if="{{!hasMoreProducts && products.length > 0}}">没有更多商品了</view>
+  </scroll-view>
+</view> 

@@ -1,0 +1,53 @@
+<view class="cart-container">
+  <block wx:if="{{cartItems.length > 0}}">
+    <view class="cart-header">
+      <text>共 {{totalItems}} 件商品</text>
+      <button size="mini" type="warn" bindtap="clearCart" class="clear-cart-btn" wx:if="{{cartItems.length > 0}}">清空购物车</button>
+    </view>
+
+    <scroll-view scroll-y class="cart-items-scroll">
+      <view wx:for="{{cartItems}}" wx:key="uniqueId" class="cart-item">
+        <!-- 商品基本信息区域 -->
+        <view class="cart-item-main">
+          <image class="item-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-specs" wx:if="{{item.selectedSpecs}}">
+              <block wx:for="{{item.selectedSpecs}}" wx:for-item="specValue" wx:for-index="specKey" wx:key="specKey">
+                {{specKey}}: {{specValue}} 
+              </block>
+            </text>
+            <view class="item-price-row">
+              <text class="item-price">¥{{item.price}}</text>
+              <!-- 删除按钮移到价格同一行 -->
+              <button class="remove-item-btn" bindtap="removeItemFromCart" data-unique-id="{{item.uniqueId}}">删除</button>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 电器控制区域，独立一行 -->
+        <view class="item-quantity-container">
+          <view class="item-quantity-controls">
+            <button class="quantity-btn {{item.quantity <= 1 ? 'disabled' : ''}}" bindtap="changeItemQuantity" data-unique-id="{{item.uniqueId}}" data-amount="-1">-</button>
+            <input class="quantity-input" type="number" value="{{item.quantity}}" bindinput="onItemQuantityInput" data-unique-id="{{item.uniqueId}}"></input>
+            <button class="quantity-btn" bindtap="changeItemQuantity" data-unique-id="{{item.uniqueId}}" data-amount="1">+</button>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="cart-summary">
+      <view class="total-price-section">
+        <text class="total-label">合计:</text>
+        <text class="total-price">¥{{totalPrice}}</text>
+      </view>
+      <button class="checkout-btn {{cartItems.length === 0 ? 'disabled': ''}}" bindtap="goToCheckout" disabled="{{cartItems.length === 0}}">去结算 ({{totalItems}})</button>
+    </view>
+  </block>
+
+  <view wx:else class="empty-cart">
+    <image class="empty-cart-image" src="/images/icons/empty_cart.png"></image>
+    <text class="empty-cart-text">购物车还是空的哦～</text>
+    <button class="go-shopping-btn" bindtap="goShopping">去逛逛</button>
+  </view>
+</view> 

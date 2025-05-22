@@ -1,0 +1,722 @@
+page {
+  background-color: #f8f8f8; /* 更柔和的背景色 */
+  color: #333; /* 基础文字颜色 */
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  height: 100%;
+}
+
+.product-detail-container.no-scroll {
+  overflow: hidden; /* 防止背景滚动 */
+  height: 100vh; 
+}
+
+/* 加载和空状态占位符 */
+.loading-placeholder,
+.empty-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  height: calc(100vh - 120rpx); /* 减去底部操作栏高度 */
+  box-sizing: border-box;
+}
+.loading-gif {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+}
+.empty-icon-large {
+  width: 200rpx; /* 调整为空状态大图标 */
+  margin-bottom: 30rpx;
+}
+.empty-text-large {
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+.back-btn {
+  background-color: #1296db;
+  color: white;
+  padding: 15rpx 50rpx;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+}
+
+.product-detail-container {
+  padding-bottom: 120rpx; /* 调整为单行底部操作栏预估高度 (80rpx按钮 + 2*15rpx padding + 安全区) */
+}
+
+/* 轮播 */
+.swiper-section {
+  position: relative;
+  background-color: #fff; /* 防止图片未加载时背景色影响 */
+}
+.product-swiper {
+  width: 100%;
+  height: 750rpx; /* 保持原样或按需调整 */
+}
+.swiper-image {
+  width: 100%;
+  height: 100%;
+}
+.swiper-indicator {
+  position: absolute;
+  bottom: 20rpx;
+  right: 30rpx;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 8rpx 15rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+/* 通用区块样式优化 */
+.section {
+  background-color: #fff;
+  margin: 20rpx; /* 上下外边距改为20，左右不变 */
+  padding: 30rpx; /* 统一内边距 */
+  border-radius: 16rpx; /* 增大圆角 */
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06); /* 调整阴影 */
+}
+
+.section-title {
+  font-size: 32rpx; /* 统一区标题字号 */
+  font-weight: 600; /* nieco bold */
+  color: #333;
+  margin-bottom: 25rpx;
+  padding-left: 10rpx;
+  border-left: 6rpx solid #1296db;
+}
+
+/* 商品基本信息 */
+.product-info-section.basic-info {
+  margin-top: 0; /* 第一个区块无上外边距 */
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: none; /* 通常轮播图下方信息区不需要独立阴影 */
+}
+
+.price-share-fav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+.price-container {
+  display: flex;
+  align-items: baseline;
+}
+.current-price {
+  font-size: 52rpx; /* 增大价格字号 */
+  color: #e64340; /* 主题红色 */
+  font-weight: bold;
+  margin-right: 15rpx;
+}
+.current-price .price-symbol {
+  font-size: 30rpx;
+  margin-right: 4rpx;
+}
+.original-price {
+  font-size: 28rpx;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.actions-container {
+  /* share-btn 样式可在此处添加 */
+}
+
+.product-name {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #222;
+  line-height: 1.4;
+  margin-bottom: 10rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-short-desc {
+  font-size: 26rpx;
+  color: #777;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.product-tags {
+  margin-bottom: 20rpx;
+}
+.tag-item {
+  font-size: 22rpx;
+  color: #1296db; /* 主题色 */
+  background-color: #eaf6ff; /* 主题色浅色背景 */
+  padding: 6rpx 12rpx;
+  border-radius: 6rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx; /* 允许换行时的间距 */
+  display: inline-block;
+}
+
+.sales-stock-info {
+  font-size: 24rpx;
+  color: #999;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 数量选择 */
+.quantity-selection-section .section-title {
+  margin-bottom: 30rpx;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+}
+.quantity-control .btn {
+  width: 56rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  text-align: center;
+  background-color: #f7f7f7;
+  color: #555;
+  font-size: 36rpx;
+  border: 1rpx solid #eee; /* 更细的边框 */
+}
+.quantity-control .btn.decrease {
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+}
+.quantity-control .btn.increase {
+  border-top-right-radius: 8rpx;
+  border-bottom-right-radius: 8rpx;
+}
+.quantity-control .btn.disabled {
+  color: #ccc;
+  background-color: #fcfcfc;
+}
+.quantity-control .quantity-input {
+  width: 80rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border-top: 1rpx solid #eee;
+  border-bottom: 1rpx solid #eee;
+  min-height: 56rpx;
+  padding: 0; /* 移除默认padding */
+  margin: 0 -1rpx; /* 覆盖边框 */
+  color: #333;
+}
+
+/* 服务承诺 */
+.service-info-section .service-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.service-item {
+  font-size: 24rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+.check-icon {
+  width: 30rpx; /* 调整服务图标大小 */
+  height: 30rpx;
+  margin-right: 8rpx;
+  vertical-align: middle; /* 尝试对齐 */
+}
+
+/* 配送信息 */
+.shipping-info-section .shipping-details {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+.shipping-details text {
+  margin-right: 20rpx;
+}
+
+/* Tab 区域 */
+.tab-section {
+  margin-top: 20rpx;
+  margin-bottom: 20rpx; /* 给悬浮按钮与内容区留一些间距 */
+  /* section 默认样式已包含背景和圆角 */
+}
+.tab-header {
+  display: flex;
+  border-bottom: 1rpx solid #eee;
+  background-color: #fff;
+  border-top-left-radius: 16rpx; /* 匹配 section 圆角 */
+  border-top-right-radius: 16rpx;
+  overflow: hidden; /* 配合圆角 */
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 25rpx 0;
+  font-size: 30rpx; /* 增大字号 */
+  color: #555;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+}
+.tab-item.active {
+  color: #1296db; /* 主题色 */
+  font-weight: 600;
+}
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80rpx; /* 加宽指示器 */
+  height: 6rpx;
+  background-color: #1296db; /* 主题色 */
+  border-radius: 3rpx;
+}
+.tab-content {
+  padding: 30rpx; /* 内容区域内边距 */
+  background-color: #fff;
+  border-bottom-left-radius: 16rpx;
+  border-bottom-right-radius: 16rpx;
+}
+.content-item.details-content rich-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.7;
+}
+.content-item.details-content rich-text image,
+.content-item.details-content rich-text img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 15rpx 0;
+  border-radius: 8rpx; /* 给详情图片加圆角 */
+}
+.empty-detail-text {
+  text-align: center;
+  padding: 50rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+.detail-image {
+  width: 100%;
+  display: block;
+  margin-bottom: 10rpx;
+  border-radius: 8rpx; /* 给详情图片加圆角 */
+}
+
+/* 评价区域空状态 */
+.empty-reviews {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+}
+.empty-reviews .empty-icon-small {
+  width: 160rpx; /* 调整为空状态小图标 */
+  margin-bottom: 20rpx;
+}
+.empty-reviews text {
+  font-size: 28rpx;
+}
+
+/* Floating Icon Group (NEW) */
+.floating-icon-group {
+  position: fixed;
+  right: 25rpx;
+  bottom: 150rpx; /* 大致在底部操作栏上方，可微调 */
+  z-index: 999; /* 比底部栏低一级，避免遮挡弹窗等，但高于页面内容 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx; /* 图标之间的垂直间距 */
+  background-color: rgba(255, 255, 255, 0.9); /* 半透明背景，可选 */
+  padding: 20rpx 15rpx;
+  border-radius: 40rpx; /* 圆角 */
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.floating-icon-group .action-item {
+  /* .action-item 的基本样式（flex, padding, align, justify）在之前已定义，这里可以复用 */
+  /* 如果需要微调大小或间距，可以在这里覆盖 */
+  padding: 10rpx; /* 调整悬浮图标的内边距 */
+}
+
+.floating-icon-group .action-icon {
+  width: 44rpx; /* 悬浮图标可以稍小一点 */
+  height: 44rpx;
+  margin-bottom: 4rpx;
+}
+
+.floating-icon-group .action-text {
+  font-size: 18rpx; /* 悬浮图标文字可以稍小一点 */
+}
+
+.floating-icon-group .cart-badge {
+  top: 2rpx;
+  right: 2rpx;
+  padding: 1rpx 8rpx;
+  font-size: 18rpx;
+}
+
+/* 底部操作栏 - 现在只有一行按钮 */
+.bottom-actions-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto; /* 由内容决定 */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row; /* 恢复为行方向，因为内部只有按钮组了 */
+  align-items: center; 
+  padding: 15rpx 20rpx calc(15rpx + env(safe-area-inset-bottom)) 20rpx;
+  box-shadow: 0 -4rpx 15rpx rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  box-sizing: border-box; 
+  gap: 0; /* 移除之前的列间距 */
+}
+
+/* action-icon-group 的样式不再属于 .bottom-actions-bar 直接子元素，可以移除或注释掉 */
+/* 
+.action-icon-group {
+  display: flex;
+  align-items: center; 
+  justify-content: space-around; 
+  width: 100%; 
+  gap: 20rpx; 
+}
+*/
+
+.action-item {
+  /* 这个类仍然用于 floating-icon-group 内部的项 */
+  flex: 0 0 auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx; 
+  color: #666;
+  line-height: 1.3;
+  position: relative;
+  padding: 10rpx 10rpx; /* 调整内边距，图标本身有大小，这里控制点击区域和视觉间距 */
+  text-align: center;
+  background-color: transparent; 
+  border: none; 
+}
+/* 针对button类型的action-item */
+.action-item::after {
+  border: none !important;
+}
+
+.action-icon {
+  width: 48rpx; 
+  height: 48rpx;
+  margin-bottom: 6rpx;
+}
+
+.action-text {
+  font-size: 20rpx; 
+  color: #555;
+}
+
+.action-item.favorite-action.favorited .action-text {
+  color: #e64340; 
+}
+
+.cart-badge {
+  position: absolute;
+  top: 6rpx;
+  right: 5rpx; 
+  background-color: #e64340;
+  color: white;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 16rpx;
+  min-width: 20rpx;
+  text-align: center;
+  line-height: normal; 
+  z-index: 1;
+}
+
+.action-button-group {
+  display: flex;
+  align-items: center;
+  width: 100%; 
+  gap: 20rpx; 
+}
+
+.action-btn {
+  flex: 1; /* 让两个按钮平分第二行的宽度 */
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+  padding: 0 20rpx; /* flex:1 后，padding主要控制文字与按钮边缘的距离 */
+  font-weight: 500;
+  box-shadow: 0 2rpx 5rpx rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease;
+  text-align: center; /* 确保文字居中 */
+}
+.action-btn:active {
+  opacity: 0.8;
+}
+
+.add-to-cart-btn {
+  background-image: linear-gradient(to right, #ffb800, #ff8c00); /* 橙色渐变 */
+  color: white;
+  border: none;
+}
+.add-to-cart-btn.disabled {
+  background-image: none;
+  background-color: #ccc;
+  color: #999;
+  box-shadow: none;
+}
+
+.buy-now-btn {
+  background-image: linear-gradient(to right, #ff7a4d, #e64340); /* 红色渐变 */
+  color: white;
+  border: none;
+}
+.buy-now-btn.disabled {
+  background-image: none;
+  background-color: #bbb;
+  color: #888;
+  box-shadow: none;
+}
+
+.safe-area-bottom {
+  height: env(safe-area-inset-bottom);
+  width: 100%;
+  background-color: #fff; /* 通常和底部栏背景色一致 */
+}
+
+/* WXML中原来的一些类名可能不再使用或已被覆盖，保留或删除取决于具体情况 */
+/* .product-image-swiper (已处理) */
+/* .product-basic-info .product-name (已处理) */
+/* .product-basic-info .product-price (已处理) */
+/* ... 其他旧类名按需处理 ... */
+
+/* 移除旧的底部按钮样式，因为现在用 .action-btn 统一了 */
+/* 
+.add-to-cart-main-btn,
+.buy-now-btn {
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  border-radius: 35rpx;
+  padding: 0 30rpx;
+  margin-left: 15rpx;
+}
+.add-to-cart-main-btn {
+  background-color: #ffa500; 
+  color: white;
+}
+.buy-now-btn {
+  background-color: #ff5000; 
+  color: white;
+}
+*/
+
+/* 移除 .action-icon-btn 和 .cart-badge-detail 因为结构和类名都已改变 */
+/* .action-icon-btn { ... } */
+/* .action-icon { ... } */ /* 已有新的 .action-icon */
+/* .cart-badge-detail { ... } */ /* 已有新的 .cart-badge */
+
+/* 物流与售后 */
+.logistics-info .info-item, .after-sales-policy .policy-item {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #555;
+  margin-bottom: 10rpx;
+}
+.logistics-info .info-label {
+  width: 120rpx; /* 固定标签宽度 */
+  color: #888;
+}
+.after-sales-policy .policy-item icon {
+  margin-right: 10rpx;
+}
+
+/* 商品详情 Tab */
+.product-details-tabs .tab-header {
+  display: flex;
+  border-bottom: 1rpx solid #eee;
+  margin-bottom: 20rpx;
+}
+.product-details-tabs .tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #555;
+  position: relative;
+}
+.product-details-tabs .tab-item.active {
+  color: #1296db;
+  font-weight: bold;
+}
+.product-details-tabs .tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 6rpx;
+  background-color: #1296db;
+  border-radius: 3rpx;
+}
+.detail-content .detail-image {
+  width: 100%;
+  display: block; /* 消除图片底部间隙 */
+  margin-bottom: 10rpx;
+}
+/* rich-text 基础样式, 根据你的HTML内容调整 */
+.detail-content rich-text p, .detail-content rich-text div {
+    font-size: 28rpx;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15rpx;
+}
+.detail-content rich-text img {
+    max-width: 100% !important; /* 确保图片不超出容器 */
+    height: auto !important;
+    display: block;
+    margin: 10rpx 0;
+}
+
+/* 用户评价 */
+.reviews-content .review-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.reviews-content .review-item:last-child {
+  border-bottom: none;
+}
+.reviews-content .review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.reviews-content .reviewer-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+.reviews-content .reviewer-name {
+  font-size: 26rpx;
+  color: #333;
+  margin-right: auto;
+}
+.reviews-content .review-date {
+  font-size: 22rpx;
+  color: #999;
+}
+.reviews-content .review-text {
+  font-size: 26rpx;
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 10rpx;
+  white-space: pre-wrap; /* 保留换行和空格 */
+}
+.reviews-content .review-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10rpx;
+}
+.reviews-content .review-image {
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 8rpx;
+    background-color: #eee;
+}
+.reviews-content .empty-reviews {
+  text-align: center;
+  padding: 40rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 底部操作栏 */
+.bottom-actions-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 110rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.08);
+  z-index: 100;
+}
+.action-icon-group {
+  display: flex;
+  align-items: center;
+  margin-right: auto; /* 将按钮推到右边 */
+}
+.action-icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  color: #666;
+  padding: 0 20rpx;
+  background-color: transparent;
+  border: none;
+  line-height: 1.2;
+  position: relative; /* 为了角标定位 */
+}
+.action-icon-btn::after {
+    border: none; /* 去除button默认边框 */
+}
+.action-icon {
+  width: 44rpx;
+  height: 44rpx;
+  margin-bottom: 4rpx;
+}
+.cart-badge-detail {
+  position: absolute;
+  top: 0rpx;
+  right: 10rpx;
+  background-color: #ff5000;
+  color: white;
+  font-size: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 10rpx;
+  min-width: 20rpx;
+  text-align: center;
+}
+
+.add-to-cart-main-btn,
+.buy-now-btn {
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  border-radius: 35rpx;
+  padding: 0 30rpx;
+  margin-left: 15rpx;
+}
+.add-to-cart-main-btn {
+  background-color: #ffa500; /* 橙色 */
+  color: white;
+}
+.buy-now-btn {
+  background-color: #ff5000; /* 红色 */
+  color: white;
+} 

@@ -1,0 +1,174 @@
+<view class="product-detail-container {{showSkuSelector ? 'no-scroll' : ''}}">
+  <block wx:if="{{isLoading}}">
+    <view class="loading-placeholder">
+      <image src="/images/loading_spinner.gif" class="loading-gif" mode="aspectFit"></image>
+      <text>商品详情加载中...</text>
+    </view>
+  </block>
+  <block wx:else>
+    <block wx:if="{{!productInfo || !productInfo._id}}">
+        <view class="empty-placeholder">
+            <image src="/images/empty_box.png" class="empty-icon-large" mode="widthFix"/>
+            <text class="empty-text-large">商品不存在或已下架</text>
+            <button class="back-btn" bindtap="goBack">返回上一页</button>
+        </view>
+    </block>
+    <block wx:else>
+      <!-- 商品图片轮播 -->
+      <view class="swiper-section">
+        <swiper class="product-swiper" 
+                indicator-dots 
+                autoplay 
+                circular 
+                current="{{currentSwiperIndex}}"
+                bindchange="onSwiperChange"
+                indicator-active-color="#1296db">
+          <block wx:for="{{productInfo.imageUrls}}" wx:key="index" wx:for-item="imgUrl">
+            <swiper-item bindtap="previewImage" data-url="{{imgUrl}}">
+              <image src="{{imgUrl || '/images/default_product.png'}}" class="swiper-image" mode="aspectFill" lazy-load/>
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class="swiper-indicator">{{currentSwiperIndex + 1}}/{{productInfo.imageUrls.length}}</view>
+      </view>
+
+      <!-- 商品基本信息 -->
+      <view class="product-info-section basic-info">
+        <view class="price-share-fav">
+            <view class="price-container">
+                <text class="current-price"><text class="price-symbol">¥</text>{{productInfo.price}}</text>
+                <text class="original-price" wx:if="{{productInfo.originalPrice && productInfo.originalPrice > productInfo.price}}">¥{{productInfo.originalPrice}}</text>
+            </view>
+            <view class="actions-container">
+                <!-- <button open-type="share" class="action-btn share-btn">
+                    <image src="/images/icons/share_black.png"/> <text>分享</text>
+                </button> -->
+            </view>
+        </view>
+        <text class="product-name">{{productInfo.name}}</text>
+        <text class="product-short-desc" wx:if="{{productInfo.shortDescription}}">{{productInfo.shortDescription}}</text>
+        <view class="product-tags" wx:if="{{productInfo.tags && productInfo.tags.length > 0}}">
+          <text class="tag-item" wx:for="{{productInfo.tags}}" wx:key="index">{{item}}</text>
+        </view>
+        <view class="sales-stock-info">
+          <text>销量: {{productInfo.salesCount || 0}}</text>
+          <text>库存: {{productInfo.stock || 0}}</text>
+        </view>
+      </view>
+
+      <!-- 规格选择入口 (简化，后续实现复杂SKU选择) -->
+      <!-- 
+      <view class="section spec-selection-section" bindtap="openSkuSelector" wx:if="{{productInfo.skus && productInfo.skus.length > 0}}">
+        <text class="section-title">规格</text>
+        <view class="selected-specs-text">{{ selectedSkuName || '请选择规格'}}</view>
+        <image src="/images/icons/arrow_right_grey.png" class="arrow-icon"/>
+      </view>
+       -->
+      <view class="section quantity-selection-section">
+        <text class="section-title">数量</text>
+        <view class="quantity-control">
+          <view class="btn decrease {{quantity <= 1 ? 'disabled' : ''}}" data-action="decrease" catchtap="onQuantityChange">-</view>
+          <input type="number" class="quantity-input" value="{{quantity}}" bindinput="onQuantityInput"/>
+          <view class="btn increase {{quantity >= productInfo.stock ? 'disabled' : ''}}" data-action="increase" catchtap="onQuantityChange">+</view>
+        </view>
+      </view>
+      
+      <!-- 服务承诺 -->
+      <view class="section service-info-section" wx:if="{{productInfo.services && productInfo.services.length > 0}}">
+        <text class="section-title">服务</text>
+        <view class="service-items">
+            <block wx:for="{{productInfo.services}}" wx:key="name">
+                <text class="service-item"><image src="/images/icons/check_red.png" class="check-icon"/>{{item.name}}</text>
+            </block>
+        </view>
+        <!-- <image src="/images/icons/arrow_right_grey.png" class="arrow-icon"/> -->
+      </view>
+
+      <!-- 物流信息 (简化展示) -->
+      <view class="section shipping-info-section" wx:if="{{productInfo.shippingInfo}}">
+        <text class="section-title">配送</text>
+        <view class="shipping-details">
+            <text>{{productInfo.shippingInfo.provider || '快递'}}</text>
+            <text wx:if="{{productInfo.shippingInfo.fee === 0}}">包邮</text>
+            <text wx:else>运费: ¥{{productInfo.shippingInfo.fee || '0.00'}}</text>
+            <text wx:if="{{productInfo.shippingInfo.estimatedDelivery}}">{{productInfo.shippingInfo.estimatedDelivery}}</text>
+        </view>
+      </view>
+
+      <!-- 详情 / 评价 Tab -->
+      <view class="tab-section">
+        <view class="tab-header">
+          <view class="tab-item {{activeTab === 'details' ? 'active' : ''}}" data-tab="details" bindtap="switchTab">商品详情</view>
+          <view class="tab-item {{activeTab === 'reviews' ? 'active' : ''}}" data-tab="reviews" bindtap="switchTab">累计评价</view> <!-- TODO: 评价数量 -->
+        </view>
+        <view class="tab-content">
+          <!-- 商品详情 -->
+          <view class="content-item details-content" wx:if="{{activeTab === 'details'}}">
+            <rich-text nodes="{{productInfo.longDescription}}" wx:if="{{productInfo.longDescription}}"></rich-text>
+            <view wx:if="{{!productInfo.longDescription && (!productInfo.detailImages || productInfo.detailImages.length === 0)}}" class="empty-detail-text">暂无更多详情</view>
+            <block wx:for="{{productInfo.detailImages}}" wx:key="index" wx:for-item="detailImgUrl">
+              <image src="{{detailImgUrl}}" class="detail-image" mode="widthFix" lazy-load bindtap="previewDetailImage" data-url="{{detailImgUrl}}"/>
+            </block>
+          </view>
+          <!-- 评价 -->
+          <view class="content-item reviews-content" wx:if="{{activeTab === 'reviews'}}">
+            <!-- TODO: 评价列表 -->
+            <view class="empty-reviews">
+                <image src="/images/empty_comment.png" class="empty-icon-small" mode="widthFix"/>
+                <text>暂无评价信息</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Floating Icon Group (NEW) -->
+      <view class="floating-icon-group">
+          <button class="action-item contact-service" open-type="contact" wx:if="{{false}}"> <!-- 暂时隐藏，或配置 contact-path -->
+            <image class="action-icon" src="/images/icons/service_grey.png"/>
+            <text class="action-text">客服</text>
+          </button>
+           <view class="action-item contact-service-alternative" bindtap="contactService"> <!-- 替代客服方案 -->
+            <image class="action-icon" src="/images/icons/service_grey.png"/>
+            <text class="action-text">客服</text>
+          </view>
+          <view class="action-item favorite-action {{isFavorite ? 'favorited' : ''}}" bindtap="toggleFavorite">
+            <image class="action-icon" src="{{isFavorite ? '/images/icons/favorite_red.png' : '/images/icons/favorite_grey.png'}}"/>
+            <text class="action-text">{{isFavorite ? '已收藏' : '收藏'}}</text>
+          </view>
+          <view class="action-item cart-action" bindtap="goToCart">
+            <image class="action-icon" src="/images/icons/cart_grey.png"/>
+            <text class="action-text">购物车</text>
+            <view class="cart-badge" wx:if="{{cartItemCount > 0}}">{{cartItemCount > 99 ? '99+' : cartItemCount}}</view>
+          </view>
+      </view>
+
+      <!-- 底部操作栏 -->
+      <view class="bottom-actions-bar">
+        <view class="action-button-group">
+          <button class="action-btn add-to-cart-btn {{productInfo.stock <= 0 ? 'disabled' : ''}}" 
+                  bindtap="addToCart" 
+                  disabled="{{productInfo.stock <= 0}}">
+            {{productInfo.stock <= 0 ? '已售罄' : '加入购物车'}}
+          </button>
+          <button class="action-btn buy-now-btn {{productInfo.stock <= 0 ? 'disabled' : ''}}" 
+                  bindtap="buyNow" 
+                  disabled="{{productInfo.stock <= 0}}">
+            {{productInfo.stock <= 0 ? '暂时缺货' : '立即购买'}}
+          </button>
+        </view>
+        <!-- action-icon-group is now moved to floating-icon-group -->
+      </view>
+      <view class="safe-area-bottom"></view> <!-- iPhone X 等底部安全区域适配 -->
+    </block>
+  </block>
+</view>
+
+<!-- SKU选择弹窗 (如果需要) -->
+<!-- 
+<view class="sku-selector-popup {{showSkuSelector ? 'active' : ''}}" bindtap="closeSkuSelector">
+  <view class="sku-content" catchtap> // catchtap 阻止事件冒泡关闭弹窗
+    // ... SKU 选择内容 ...
+    <button bindtap="confirmSku">确定</button>
+  </view>
+</view>
+ --> 

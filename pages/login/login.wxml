@@ -1,0 +1,34 @@
+<view class="container">
+  <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+  <text class="title">夜猫修复铺</text>
+
+  <block wx:if="{{!hasUserInfo && canIUseGetUserProfile}}">
+    <view class="login-prompt">
+      <text>为了提供更好的服务，我们需要获取您的公开信息（昵称、头像）。</text>
+    </view>
+    <button class="login-button" bindtap="getUserProfile">微信授权登录</button>
+  </block>
+  <block wx:elif="{{!hasUserInfo && canIUseOpenData}}">
+     <view class="login-prompt">
+      <text>请升级微信版本以获得更好的体验。</text>
+    </view>
+    <button class="login-button" open-type="getUserInfo" bindgetuserinfo="getUserInfoFallback">微信授权登录</button>
+  </block>
+   <block wx:elif="{{!hasUserInfo}}">
+    <view class="login-prompt">
+      <text>请允许授权以使用小程序功能。</text>
+    </view>
+    <button class="login-button" open-type="getUserInfo" bindgetuserinfo="getUserInfoFallback">微信授权登录</button>
+  </block>
+  <view wx:else class="loading-text">登录中...</view>
+
+  <view class="agreement">
+    <checkbox-group bindchange="onAgreeChange">
+      <checkbox value="agree" checked="{{isAgreed}}"></checkbox>
+    </checkbox-group>
+    <text>我已阅读并同意</text>
+    <text class="link" bindtap="openAgreement">《用户服务协议》</text>
+    <text>和</text>
+    <text class="link" bindtap="openPrivacyPolicy">《隐私政策》</text>
+  </view>
+</view> 

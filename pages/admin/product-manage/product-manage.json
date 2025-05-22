@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "商品管理",
+  "usingComponents": {},
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 150
+} 

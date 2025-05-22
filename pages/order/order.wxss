@@ -1,0 +1,50 @@
+page {
+  background-color: #f8f8f8;
+  height: 100%;
+}
+
+.order-container {
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.pending-notice {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.pending-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+}
+
+.pending-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pending-title {
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.pending-desc {
+  font-size: 30rpx;
+  color: #888;
+  text-align: center;
+  line-height: 1.6;
+}

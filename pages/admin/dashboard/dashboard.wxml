@@ -1,0 +1,42 @@
+<view class="admin-dashboard-container">
+  <view class="header">
+    <text class="title">后台管理</text>
+    <text class="welcome-msg">欢迎, {{userInfo.nickName || '管理员'}}!</text>
+  </view>
+
+  <view class="grid-menu">
+    <view class="menu-item" bindtap="navigateToUserManage">
+      <image class="menu-icon" src="/images/icons/admin_users.png"></image>
+      <text class="menu-text">用户管理</text>
+    </view>
+    <view class="menu-item" bindtap="navigateToProductManage">
+      <image class="menu-icon" src="/images/icons/admin_products.png"></image>
+      <text class="menu-text">商品管理</text>
+    </view>
+    <view class="menu-item" bindtap="navigateToOrderManage">
+      <image class="menu-icon" src="/images/icons/admin_orders.png"></image>
+      <text class="menu-text">订单管理</text>
+    </view>
+    <view class="menu-item" bindtap="navigateToCarouselManage">
+      <image class="menu-icon" src="/images/icons/admin_carousel.png"></image>
+      <text class="menu-text">轮播图管理</text>
+    </view>
+    <view class="menu-item" bindtap="navigateToCategoryManage">
+      <image class="menu-icon" src="/images/icons/admin_category.png"></image>
+      <text class="menu-text">分类管理</text>
+    </view>
+    <view class="menu-item" bindtap="navigateToSystemSettings">
+      <image class="menu-icon" src="/images/icons/admin_settings.png"></image>
+      <text class="menu-text">系统设置</text>
+    </view>
+    <!-- Add more menu items as needed -->
+  </view>
+
+  <view class="quick-stats">
+    <text class="section-title">关键指标 (示例)</text>
+    <view class="stats-item">今日订单: 12</view>
+    <view class="stats-item">待处理售后: 3</view>
+    <view class="stats-item">在线用户: 45</view>
+  </view>
+
+</view> 

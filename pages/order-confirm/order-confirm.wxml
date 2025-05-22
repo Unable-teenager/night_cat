@@ -1,0 +1,79 @@
+<!--pages/order-confirm/order-confirm.wxml-->
+<view class="order-confirm-container">
+  <!-- 收货地址 -->
+  <view class="section address-section" bindtap="selectAddress">
+    <view wx:if="{{selectedAddress}}">
+      <view class="address-user-info">
+        <text class="name">{{selectedAddress.userName}}</text>
+        <text class="tel">{{selectedAddress.telNumber}}</text>
+      </view>
+      <view class="address-detail">
+        <text class="default-tag" wx:if="{{selectedAddress.isDefault}}">默认</text>
+        {{selectedAddress.provinceName}}{{selectedAddress.cityName}}{{selectedAddress.countyName}}{{selectedAddress.detailInfo}}
+      </view>
+    </view>
+    <view wx:else class="no-address">
+      <text>请选择收货地址</text>
+    </view>
+    <image class="arrow-right" src="/images/icons/arrow_right_grey.png" mode="aspectFit"/>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="section product-list-section">
+    <view class="section-title">商品信息</view>
+    <block wx:for="{{orderItems}}" wx:key="uniqueId">
+      <view class="order-item">
+        <image class="item-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="item-info">
+          <text class="item-name">{{item.name}}</text>
+          <text class="item-specs" wx:if="{{item.selectedSkuName}}">{{item.selectedSkuName}}</text>
+          <view class="item-price-quantity">
+            <text class="item-price">¥{{item.price}}</text>
+            <text class="item-quantity">x {{item.quantity}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 金额明细 -->
+  <view class="section amount-details-section">
+    <view class="detail-row">
+      <text class="label">商品总额</text>
+      <text class="value">¥{{productTotalAmount}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="label">运费</text>
+      <text class="value">¥{{shippingFee}}</text>
+    </view>
+    <!-- <view class="detail-row">
+      <text class="label">优惠券</text>
+      <text class="value">- ¥{{couponDiscount}}</text>
+    </view> -->
+    <view class="detail-row total-payable">
+      <text class="label">实付款</text>
+      <text class="value strong">¥{{actualPayment}}</text>
+    </view>
+  </view>
+
+  <!-- 订单备注 -->
+  <view class="section remarks-section">
+    <text class="section-title">订单备注</text>
+    <textarea class="remarks-input" 
+              maxlength="100" 
+              placeholder="选填，给商家留言（100字以内）" 
+              bindinput="onRemarkInput"
+              value="{{remark}}"></textarea>
+  </view>
+
+  <!-- 底部提交栏 -->
+  <view class="bottom-submit-bar">
+    <view class="total-amount-display">
+      <text class="label">合计：</text>
+      <text class="amount-value">¥{{actualPayment}}</text>
+    </view>
+    <button class="submit-order-btn" bindtap="submitOrder" disabled="{{isLoading || orderItems.length === 0}}">
+      {{isLoading ? '提交中...' : '提交订单'}}
+    </button>
+  </view>
+</view>

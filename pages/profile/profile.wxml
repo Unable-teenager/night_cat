@@ -1,0 +1,58 @@
+<view class="profile-container">
+  <view class="user-info-section">
+    <image class="avatar" src="{{userInfo.avatarUrl || '/images/default_avatar.png'}}" mode="aspectFill" binderror="onAvatarError"></image>
+    <text class="nickname">{{userInfo.nickName || '夹猫访客'}}</text>
+  </view>
+
+  <!-- 功能模块 -->
+  <view class="feature-section">
+    <view class="section-title">我的信息</view>
+    <view class="feature-list">
+      <view class="feature-item" bindtap="editProfile">
+        <image class="feature-icon" src="/images/icons/profile_edit.png" mode="aspectFit"></image>
+        <text class="feature-name">个人资料</text>
+        <image class="arrow-right" src="/images/icons/arrow_right_grey.png" mode="aspectFit"></image>
+      </view>
+      <view class="feature-item" bindtap="goToAddressList">
+        <image class="feature-icon" src="/images/icons/address.png" mode="aspectFit"></image>
+        <text class="feature-name">收货地址</text>
+        <image class="arrow-right" src="/images/icons/arrow_right_grey.png" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 我的订单 -->
+  <view class="feature-section">
+    <view class="section-title">我的订单</view>
+    <view class="feature-list">
+      <view class="feature-item" bindtap="goToOrder">
+        <image class="feature-icon" src="/images/icons/order.png" mode="aspectFit"></image>
+        <text class="feature-name">全部订单</text>
+        <image class="arrow-right" src="/images/icons/arrow_right_grey.png" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 管理员功能 -->
+  <view class="feature-section" wx:if="{{userInfo.isAdmin}}">
+    <view class="section-title">管理员功能</view>
+    <view class="feature-list">
+      <view class="feature-item" bindtap="goToAdmin">
+        <image class="feature-icon" src="/images/icons/admin.png" mode="aspectFit"></image>
+        <text class="feature-name">进入后台</text>
+        <image class="arrow-right" src="/images/icons/arrow_right_grey.png" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 其他设置 -->
+  <view class="feature-section">
+    <view class="section-title">账号设置</view>
+    <view class="feature-list">
+      <view class="feature-item logout" bindtap="logout">
+        <image class="feature-icon" src="/images/icons/logout.png" mode="aspectFit"></image>
+        <text class="feature-name">退出登录</text>
+      </view>
+    </view>
+  </view>
+</view>

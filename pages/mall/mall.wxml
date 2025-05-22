@@ -1,0 +1,110 @@
+<view class="mall-container">
+  <!-- 搜索栏 -->
+  <view class="search-bar-container">
+    <view class="search-bar">
+      <image src="/images/icons/search_grey.png" class="search-icon"/>
+      <input class="search-input" 
+             placeholder="搜索商品/服务" 
+             value="{{searchKeyword}}" 
+             confirm-type="search"
+             bindinput="onSearchInput" 
+             bindconfirm="onSearchConfirm"/>
+    </view>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="swiper-container" indicator-dots autoplay interval="3000" circular wx:if="{{swiperList.length > 0}}" indicator-active-color="#1296db">
+    <block wx:for="{{swiperList}}" wx:key="_id">
+      <swiper-item bindtap="onSwiperTap" data-item="{{item}}">
+        <image src="{{item.imageUrl}}" class="swiper-image" mode="aspectFill" lazy-load/>
+        <!-- 可选：显示标题 -->
+        <!-- <view class="swiper-item-title">{{item.title}}</view> -->
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="no-swiper-placeholder" wx:if="{{swiperList.length === 0 && !isLoadingMore}}">
+    <!-- 可以使用一个默认的占位图或者简单的文字提示 -->
+    <image src="/images/default_carousel.png" mode="aspectFill" class="swiper-image-placeholder"/>
+    <text class="swiper-placeholder-text">精彩内容即将呈现</text>
+  </view>
+
+  <!-- Category Navigation -->
+  <scroll-view class="category-nav-scroll" scroll-x show-scrollbar="false">
+    <view class="category-nav">
+      <block wx:for="{{categories}}" wx:key="_id">
+        <view 
+          class="category-item {{selectedCategoryId === item._id ? 'active' : ''}}" 
+          bindtap="onCategoryTap" 
+          data-id="{{item._id}}"
+        >
+          {{item.name}}
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 商品列表标题 -->
+  <view class="product-list-title-container">
+      <view class="section-line"></view>
+      <view class="product-list-title">{{currentCategory ? currentCategory.name : (searchKeyword ? '\"' + searchKeyword + '\" 的搜索结果' : '热门推荐')}}</view>
+      <view class="section-line"></view>
+  </view>
+
+  <!-- 商品网格列表 -->
+  <view class="product-grid" wx:if="{{productList.length > 0}}">
+    <view class="product-card" wx:for="{{productList}}" wx:key="_id" bindtap="goToProductDetail" data-id="{{item._id}}">
+      <view class="product-image-container">
+          <image src="{{item.mainImageUrl || (item.imageUrls && item.imageUrls[0]) || '/images/default_product.png'}}" 
+                 class="product-image" 
+                 mode="aspectFill" 
+                 lazy-load="true"
+                 binderror="onProductImageError" 
+                 data-index="{{index}}"/>
+          <view class="product-tag-stock" wx:if="{{item.stock <= 0}}">已售罄</view>
+          <view class="product-tag-stock" wx:elif="{{item.stock < 10 && item.stock > 0}}">仅剩{{item.stock}}件</view>
+      </view>
+      <view class="product-info">
+        <text class="product-name">{{item.name}}</text>
+        <!-- <text class="product-description">{{item.shortDescription || ''}}</text> -->
+        <text class="product-price">¥{{item.price}}</text>
+        <view class="add-to-cart-btn-wrapper" catchtap="preventBubble"> 
+          <!-- catchtap阻止事件冒泡到product-card的tap事件 -->
+          <button class="add-to-cart-btn {{item.stock <= 0 ? 'disabled' : ''}}" 
+                  catchtap="addToCart" 
+                  data-id="{{item._id}}" 
+                  disabled="{{item.stock <= 0}}">
+              加入购物车
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="list-status-container">
+    <view class="loading-initial" wx:if="{{productList.length === 0 && isLoadingMore && pageNo === 1}}">
+      <image src="/images/loading_spinner.gif" class="loading-spinner-gif" mode="aspectFit"></image>
+      <text>努力加载中...</text>
+    </view>
+    <view class="empty-product-list" wx:if="{{productList.length === 0 && !isLoadingMore && !hasMoreData}}">
+      <image src="/images/empty_box.png" class="empty-icon" mode="widthFix"/>
+      <text class="empty-text">暂未找到相关商品</text>
+      <text class="empty-subtext">店主正在快马加鞭上新中~</text>
+      <!-- <button class="empty-action-btn" bindtap="onPullDownRefresh">重新加载</button> -->
+    </view>
+    <view class="loading-more" wx:if="{{productList.length > 0 && isLoadingMore}}">
+      <image src="/images/loading_spinner.gif" class="loading-spinner-gif small" mode="aspectFit"></image>
+      <text>正在加载更多...</text>
+    </view>
+    <view class="no-more-data" wx:if="{{!hasMoreData && productList.length > 0 && !isLoadingMore}}">
+      <text>--- 我是有底线的 ---</text>
+    </view>
+  </view>
+
+  <!-- 购物车浮动按钮 -->
+  <view class="fab-cart-container" bindtap="goToCart">
+    <image src="/images/icons/cart_fab.png" class="fab-cart-icon"/>
+    <view class="cart-badge" wx:if="{{cartItemCount > 0}}">{{cartItemCount > 99 ? '99+' : cartItemCount}}</view>
+  </view>
+
+</view> 

@@ -1,0 +1,43 @@
+<!--index.wxml-->
+<view class="search-container">
+  <view class="search-box">
+    <image class="search-icon" src="../../images/search.png"></image>
+    <input class="search-input" placeholder="搜索视频" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearchConfirm"/>
+    <view class="search-btn" bindtap="onSearchConfirm">搜索</view>
+  </view>
+</view>
+
+<view class="content">
+  <view class="left">
+    <block wx:for="{{list}}" wx:key="index">
+      <template is="item" data="{{...item}}" wx:if="{{index%2==0}}"></template>
+    </block>
+  </view>
+  <view class="right">
+    <block wx:for="{{list}}" wx:key="index">
+      <template is="item" data="{{...item}}" wx:if="{{index%2==1}}"></template>
+    </block>
+  </view>
+  
+  <!-- 无搜索结果显示 -->
+  <view class="no-result" wx:if="{{list.length === 0}}">
+    <image class="no-result-icon" src="../../images/no-result.png"></image>
+    <text class="no-result-text">暂无相关视频</text>
+  </view>
+</view>
+
+<template name="item">
+  <view class="item">
+    <image class="item-img" src="{{url}}" mode="widthFix"></image>
+    <view class="item-title-box">
+      <navigator url="url" class="item-title">{{title}}</navigator>
+    </view>
+    <view class="name">
+      <image class="item-ava" src="{{avatar}}"></image>
+      <text class="name-title">{{name}}</text>
+      <view class="heart">
+        <text>{{num}}</text>
+      </view>
+    </view>
+  </view>
+</template>

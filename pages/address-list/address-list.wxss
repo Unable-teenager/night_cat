@@ -1,0 +1,138 @@
+/* pages/address-list/address-list.wxss */
+page {
+  background-color: #f8f8f8;
+  min-height: 100%;
+}
+
+.address-list-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 120rpx; /* 为底部按钮留出空间 */
+}
+
+/* 空地址提示 */
+.empty-address {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: #999;
+}
+
+/* 地址列表样式 */
+.address-list {
+  padding: 20rpx;
+}
+
+.address-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.address-item.default {
+  border-left: 4rpx solid #ff5000;
+}
+
+.address-info {
+  flex: 1;
+  padding-right: 20rpx;
+}
+
+.name-phone {
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-right: 20rpx;
+}
+
+.phone {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.default-tag {
+  font-size: 22rpx;
+  color: #ff5000;
+  border: 1rpx solid #ff5000;
+  padding: 2rpx 10rpx;
+  border-radius: 12rpx;
+  margin-left: 14rpx;
+}
+
+.detail-address {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+.address-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 60rpx;
+}
+
+.edit-btn, .delete-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.edit-btn image, .delete-btn image {
+  width: 36rpx;
+  height: 36rpx;
+  opacity: 0.7;
+}
+
+/* 添加地址按钮 */
+.add-address-btn {
+  position: fixed;
+  bottom: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: linear-gradient(135deg, #ff7e00, #ff5000);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90rpx;
+  border-radius: 45rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 80, 0, 0.2);
+}
+
+.add-address-btn image {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
+
+.add-address-btn text {
+  font-size: 30rpx;
+}

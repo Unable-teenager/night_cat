@@ -1,0 +1,106 @@
+<view class="container product-edit-container">
+  <form bindsubmit="onFormSubmit">
+    <view class="form-section">
+      <view class="form-title">基本信息</view>
+      <view class="form-item">
+        <text class="item-label required">商品名称</text>
+        <input name="name" class="item-input" value="{{product.name}}" placeholder="请输入商品名称" maxlength="100"/>
+      </view>
+      <view class="form-item">
+        <text class="item-label required">商品价格 (元)</text>
+        <input name="price" type="digit" class="item-input" value="{{product.price}}" placeholder="例如: 99.00"/>
+      </view>
+      <view class="form-item">
+        <text class="item-label">原价/划线价 (元)</text>
+        <input name="originalPrice" type="digit" class="item-input" value="{{product.originalPrice}}" placeholder="例如: 199.00 (选填)"/>
+      </view>
+      <view class="form-item">
+        <text class="item-label required">库存数量</text>
+        <input name="stock" type="number" class="item-input" value="{{product.stock}}" placeholder="请输入库存数量"/>
+      </view>
+      <view class="form-item">
+        <text class="item-label">商品分类<text class="required">*</text></text>
+        <picker class="picker" bindchange="onCategoryChange" value="{{categoryIndex}}" range="{{categories}}" range-key="name">
+          <view wx:if="{{categories.length === 0}}" class="picker-placeholder">暂无可用分类</view>
+          <view wx:elif="{{categoryIndex === -1}}" class="picker-placeholder">请选择分类</view>
+          <view wx:else class="picker-selected">{{categories[categoryIndex].name}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="item-label">商品标签 (逗号隔开)</text>
+        <input name="tags" class="item-input" value="{{product.tagsString}}" placeholder="例如: 新品,热卖,包邮"/>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="form-title">商品图片</view>
+      <view class="form-item">
+        <text class="item-label">主图 (1张)</text>
+        <view class="image-uploader">
+          <view class="image-preview-item" wx:if="{{product.mainImageUrl}}">
+            <image src="{{product.mainImageUrl}}" mode="aspectFill" bindtap="previewImage" data-type="mainImageUrl" data-url="{{product.mainImageUrl}}"></image>
+            <view class="delete-icon" bindtap="deleteImage" data-type="mainImageUrl">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" data-type="mainImageUrl" wx:else>+</view>
+        </view>
+      </view>
+      <view class="form-item">
+        <text class="item-label">轮播图 (最多9张)</text>
+        <view class="image-uploader multi-image">
+          <block wx:for="{{product.imageUrls}}" wx:key="index">
+            <view class="image-preview-item">
+              <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-type="imageUrls" data-index="{{index}}" data-url="{{item}}"></image>
+              <view class="delete-icon" bindtap="deleteImage" data-type="imageUrls" data-index="{{index}}">×</view>
+            </view>
+          </block>
+          <view class="upload-btn" bindtap="chooseImage" data-type="imageUrls" wx:if="{{product.imageUrls.length < 9}}">+</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="form-title">商品描述</view>
+      <view class="form-item">
+        <text class="item-label">简短描述</text>
+        <textarea name="shortDescription" class="item-textarea" value="{{product.shortDescription}}" placeholder="请输入商品卖点、简短介绍 (100字内)" maxlength="200"></textarea>
+      </view>
+      <view class="form-item">
+        <text class="item-label">详细描述 (富文本)</text>
+        <!-- TODO: 集成富文本编辑器，或引导用户输入HTML -->
+        <textarea name="longDescription" class="item-textarea long-desc" value="{{product.longDescription}}" placeholder="请输入商品详细描述 (支持HTML)" maxlength="-1"></textarea>
+      </view>
+      <view class="form-item">
+        <text class="item-label">详情图片 (最多9张)</text>
+        <view class="image-uploader multi-image">
+          <block wx:for="{{product.detailImages}}" wx:key="index">
+            <view class="image-preview-item">
+              <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-type="detailImages" data-index="{{index}}" data-url="{{item}}"></image>
+              <view class="delete-icon" bindtap="deleteImage" data-type="detailImages" data-index="{{index}}">×</view>
+            </view>
+          </block>
+          <view class="upload-btn" bindtap="chooseImage" data-type="detailImages" wx:if="{{product.detailImages.length < 9}}">+</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 更多字段如规格 (specs), SKU 等可在此添加 -->
+
+    <view class="form-section">
+      <view class="form-title">设置</view>
+      <view class="form-item switch-item">
+        <text class="item-label">是否上架</text>
+        <switch name="isActive" checked="{{product.isActive}}"></switch>
+      </view>
+      <view class="form-item">
+        <text class="item-label">排序值 (数字越大越靠前)</text>
+        <input name="sortOrder" type="number" class="item-input" value="{{product.sortOrder}}" placeholder="例如: 100"/>
+      </view>
+    </view>
+
+    <view class="form-actions">
+      <button form-type="submit" type="primary" loading="{{isSubmitting}}">保存提交</button>
+      <button bindtap="cancelEdit">取消</button>
+    </view>
+
+  </form>
+</view> 

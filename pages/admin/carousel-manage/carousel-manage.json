@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "轮播图管理",
+  "usingComponents": {},
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 150
+} 

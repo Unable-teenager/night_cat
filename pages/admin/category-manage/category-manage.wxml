@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="header">
+    <text class="title">分类列表</text>
+    <button class="add-btn" type="primary" size="mini" bindtap="toggleAddForm">{{showAddForm ? '取消新增' : '新增分类'}}</button>
+  </view>
+
+  <!-- 新增分类表单 -->
+  <view class="add-category-form {{showAddForm ? 'expanded' : 'collapsed'}}">
+    <view class="form-item">
+      <text class="label">分类名称:</text>
+      <input class="input" placeholder="请输入分类名称" value="{{newCategory.name}}" bindinput="onNewCategoryInput" data-field="name"/>
+    </view>
+    <view class="form-item">
+      <text class="label">排<span style="display:inline-block; width:28rpx;"></span>序:</text> <!-- 使用 span 占位对齐 -->
+      <input class="input short-input" type="number" placeholder="数字,可选" value="{{newCategory.sortOrder}}" bindinput="onNewCategoryInput" data-field="sortOrder"/>
+    </view>
+    <view class="form-item">
+      <text class="label">是否激活:</text>
+      <switch checked="{{newCategory.isActive}}" bindchange="onNewCategorySwitchChange" data-field="isActive"/>
+    </view>
+    <button class="submit-add-btn" type="primary" bindtap="submitAddCategory" disabled="{{isSubmittingNewCategory}}" loading="{{isSubmittingNewCategory}}">确认添加</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+  <view wx:if="{{!loading && categories.length === 0 && !showAddForm}}" class="empty-tip">暂无分类数据, 点击右上角新增</view>
+
+  <view class="category-list" wx:if="{{!loading && categories.length > 0}}">
+    <view class="category-item header-row">
+      <text class="name">分类名称</text>
+      <text class="sort-order">排序</text>
+      <text class="status">状态</text>
+      <text class="actions">操作</text>
+    </view>
+    <block wx:for="{{categories}}" wx:key="_id">
+      <view class="category-item">
+        <text class="name">{{item.name}}</text>
+        <view class="sort-order">
+          <input class="sort-input" type="number" value="{{item.sortOrder}}" data-id="{{item._id}}" bindblur="onSortOrderChange"/>
+        </view>
+        <text class="status {{item.isActive ? 'active' : 'inactive'}}">{{item.isActive ? '已激活' : '已禁用'}}</text>
+        <view class="actions">
+          <button class="action-btn {{item.isActive ? 'disable' : 'enable'}}" size="mini" bindtap="toggleCategoryStatus" data-id="{{item._id}}" data-current-status="{{item.isActive}}">
+            {{item.isActive ? '禁用' : '激活'}}
+          </button>
+          <!-- 暂时不提供编辑和删除 -->
+          <!-- <button class="action-btn edit" size="mini" bindtap="editCategory" data-id="{{item._id}}">编辑</button> -->
+          <!-- <button class="action-btn delete" size="mini" bindtap="deleteCategory" data-id="{{item._id}}">删除</button> -->
+        </view>
+      </view>
+    </block>
+  </view>
+</view> 

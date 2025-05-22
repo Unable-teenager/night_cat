@@ -1,0 +1,18 @@
+<view class="edit-profile-container">
+  <view class="form-section">
+    <view class="avatar-section">
+      <image class="avatar-preview" src="{{avatarUrl || '/images/default_avatar.png'}}" mode="aspectFill" bindtap="chooseAvatar"></image>
+      <button class="change-avatar-btn" size="mini" bindtap="chooseAvatar">更换头像</button>
+    </view>
+
+    <view class="nickname-section">
+      <text class="label">昵称:</text>
+      <input class="nickname-input" type="text" placeholder="请输入昵称" value="{{nickName}}" bindinput="onNicknameInput" maxlength="20"></input>
+    </view>
+  </view>
+
+  <view class="action-buttons">
+    <button class="save-btn" bindtap="saveProfile" disabled="{{isSaving}}">{{isSaving ? '保存中...' : '保存修改'}}</button>
+    <button class="cancel-btn" bindtap="cancelEdit">取消</button>
+  </view>
+</view> 

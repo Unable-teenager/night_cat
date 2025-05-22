@@ -1,0 +1,78 @@
+<view class="container carousel-edit-container">
+  <form bindsubmit="onFormSubmit">
+    <view class="form-section">
+      <view class="form-title">轮播图信息</view>
+      <view class="form-item">
+        <text class="item-label required">轮播图片</text>
+        <view class="image-uploader">
+          <view class="image-preview-item" wx:if="{{carousel.imageUrl}}">
+            <image src="{{carousel.imageUrl}}" mode="aspectFit" bindtap="previewImage" data-url="{{carousel.imageUrl}}"></image>
+            <view class="delete-icon" bindtap="deleteImage">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" wx:else>+</view>
+        </view>
+      </view>
+      <view class="form-item-help">
+        <text>建议图片尺寸：750 x 300 (或按此比例)，图片大小不超过1MB。</text>
+      </view>
+
+      <view class="form-item">
+        <text class="item-label">标题 (可选)</text>
+        <input name="title" class="item-input" value="{{carousel.title}}" placeholder="请输入轮播图标题" maxlength="50"/>
+      </view>
+
+      <view class="form-item">
+        <text class="item-label">描述 (可选)</text>
+        <textarea name="description" class="item-textarea" value="{{carousel.description}}" placeholder="请输入简短描述" maxlength="100"></textarea>
+      </view>
+
+      <view class="form-item">
+        <text class="item-label required">链接类型</text>
+        <picker name="linkType" bindchange="onLinkTypeChange" value="{{linkTypeIndex}}" range="{{linkTypeOptions}}" range-key="label">
+          <view class="picker-value {{carousel.linkType ? '' : 'placeholder'}}">
+            {{carousel.linkType ? linkTypeOptions[linkTypeIndex].label : '请选择链接类型'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item" wx:if="{{carousel.linkType && carousel.linkType !== 'none'}}">
+        <text class="item-label required">链接目标</text>
+        <input name="linkValue" class="item-input" value="{{carousel.linkValue}}" placeholder="{{linkValuePlaceholder}}"/>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="form-title">设置</view>
+      <view class="form-item switch-item">
+        <text class="item-label">是否启用</text>
+        <switch name="isActive" checked="{{carousel.isActive}}"></switch>
+      </view>
+      <view class="form-item">
+        <text class="item-label">排序值 (数字越小越靠前)</text>
+        <input name="sortOrder" type="number" class="item-input" value="{{carousel.sortOrder}}" placeholder="例如: 0, 10, 20"/>
+      </view>
+      <!-- 可选：生效时间范围 -->
+       <view class="form-item">
+        <text class="item-label">生效开始时间 (可选)</text>
+        <picker mode="date" value="{{carousel.startDate}}" bindchange="onDateChange" data-field="startDate">
+          <view class="picker-value {{carousel.startDate ? '' : 'placeholder'}}">
+            {{carousel.startDate || '选择日期'}}
+          </view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="item-label">生效结束时间 (可选)</text>
+        <picker mode="date" value="{{carousel.endDate}}" start="{{carousel.startDate || ''}}" bindchange="onDateChange" data-field="endDate">
+          <view class="picker-value {{carousel.endDate ? '' : 'placeholder'}}">
+            {{carousel.endDate || '选择日期'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-actions">
+      <button form-type="submit" type="primary" loading="{{isSubmitting}}">保存提交</button>
+      <button bindtap="cancelEdit">取消</button>
+    </view>
+  </form>
+</view> 

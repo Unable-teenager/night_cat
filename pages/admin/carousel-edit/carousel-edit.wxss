@@ -1,0 +1,158 @@
+page {
+  background-color: #f8f8f8;
+}
+
+.carousel-edit-container {
+  padding-bottom: 140rpx; /* For form-actions */
+}
+
+.form-section {
+  background-color: #fff;
+  margin: 20rpx;
+  border-radius: 12rpx;
+  padding: 0 30rpx 10rpx;
+}
+
+.form-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 15rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+  font-size: 28rpx;
+  min-height: 50rpx; /* Ensure items have some height */
+}
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.item-label {
+  width: 220rpx; /* Fixed width for labels */
+  color: #555;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+.item-label.required::before {
+  content: '';
+  display: inline-block;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background-color: #ff4d4f;
+  margin-right: 8rpx;
+  vertical-align: middle;
+}
+
+.item-input {
+  flex: 1;
+  color: #333;
+  text-align: left;
+  min-height: auto;
+}
+.item-textarea {
+  flex: 1;
+  height: 100rpx;
+  padding: 10rpx;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  width: auto;
+}
+
+.form-item.switch-item .item-label {
+  flex-grow: 1;
+}
+.form-item.switch-item switch {
+  transform: scale(0.8);
+}
+
+/* Image Uploader */
+.image-uploader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.upload-btn,
+.image-preview-item {
+  width: 200rpx; /* Wider for carousel images */
+  height: 100rpx; /* Adjust height to maintain aspect ratio like 750x300 -> 2:1 */
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden; /* Ensure image fits */
+}
+
+.upload-btn {
+  border: 1rpx dashed #ccc;
+  font-size: 50rpx;
+  color: #aaa;
+  background-color: #f7f7f7;
+}
+
+.image-preview-item image {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; ensure this if images are not exact aspect ratio */
+}
+
+.delete-icon {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+}
+
+.form-item-help {
+  font-size: 22rpx;
+  color: #999;
+  padding: 0 0 15rpx 0; /* Below the image uploader */
+  text-align: left;
+}
+
+.picker-value {
+  flex: 1;
+  text-align: left;
+  color: #333;
+}
+.picker-value.placeholder {
+  color: #aaa;
+}
+
+.form-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx 30rpx;
+  display: flex;
+  border-top: 1rpx solid #eee;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.05);
+  z-index: 10;
+}
+
+.form-actions button {
+  flex: 1;
+  margin: 0 10rpx;
+} 

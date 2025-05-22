@@ -1,0 +1,159 @@
+page {
+    padding: 10rpx;
+  }
+  
+  .content {
+    text-align: justify;
+  }
+  
+  .item {
+    background-color: #fff;
+    margin: 10rpx 3%;
+    margin-bottom: 20rpx;
+    display: inline-block;
+    width: 96%;
+    border-radius: 20rpx;
+    overflow: hidden;
+  }
+  
+  .item-ava {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+  }
+  
+  .heart {
+    width: 30rpx;
+    height: 26rpx;
+    margin-right: 8rpx;
+  }
+  
+  .heart {
+    display: flex;
+    align-items: center;
+  }
+  
+  .item-img {
+    width: 100%
+  }
+  
+  .item-title {
+    font-size: 24rpx;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    font-family: 'PingFang SC-Medium';
+    color: #1e1e1e;
+    margin: 15rpx;
+    line-height: 27rpx;
+  }
+  
+  .item .name {
+    display: flex;
+    padding: 0 15rpx;
+    margin-top: 20rpx;
+    padding-bottom: 10rpx;
+    align-items: center;
+    font-size: 22rpx;
+    color: #1e1e1e;
+    font-family: 'PingFang SC-Medium';
+  }
+  
+  .name image {
+    flex: 0 0 auto;
+  }
+  
+  .item-title-box {
+    display: flex;
+    position: relative;
+  }
+  
+  .name-title {
+    flex: 1;
+    margin-left: 18rpx;
+    margin-right: 20rpx;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+  
+  .name text:last-child {
+    color: #c4c4c4;
+    text-decoration: underline;
+    line-height: 10rpx;
+  
+  }
+  
+  .left,
+  .right {
+    display: inline-block;
+    vertical-align: top;
+    width: 49%;
+  }
+  
+  /* 搜索框样式 */
+  .search-container {
+    padding: 20rpx 30rpx;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .search-box {
+    display: flex;
+    align-items: center;
+    background-color: #f5f7fa;
+    border-radius: 40rpx;
+    padding: 10rpx 20rpx;
+  }
+  
+  .search-icon {
+    width: 36rpx;
+    height: 36rpx;
+    margin-right: 10rpx;
+  }
+  
+  .search-input {
+    flex: 1;
+    height: 60rpx;
+    font-size: 28rpx;
+    color: #333;
+  }
+  
+  .search-btn {
+    padding: 0 20rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 28rpx;
+    color: #8cbdb6;
+    font-weight: 500;
+  }
+  
+  /* 无搜索结果样式 */
+  .no-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100rpx 0;
+    width: 100%;
+  }
+  
+  .no-result-icon {
+    width: 160rpx;
+    height: 160rpx;
+    margin-bottom: 20rpx;
+    opacity: 0.6;
+  }
+  
+  .no-result-text {
+    font-size: 28rpx;
+    color: #999;
+  }
+  

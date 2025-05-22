@@ -1,0 +1,207 @@
+/* pages/order-confirm/order-confirm.wxss */
+page {
+  background-color: #f8f8f8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}
+
+.order-confirm-container {
+  padding-bottom: calc(120rpx + env(safe-area-inset-bottom)); /* 为底部提交栏预留空间 */
+}
+
+.section {
+  background-color: #fff;
+  margin: 20rpx;
+  padding: 25rpx 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 25rpx;
+}
+
+/* 地址区域 */
+.address-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+}
+.address-user-info {
+  margin-bottom: 10rpx;
+}
+.address-user-info .name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  margin-right: 20rpx;
+}
+.address-user-info .tel {
+  font-size: 28rpx;
+  color: #555;
+}
+.address-detail {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+.default-tag {
+  background-color: #e64340;
+  color: white;
+  font-size: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 4rpx;
+  margin-right: 10rpx;
+  vertical-align: middle;
+}
+.no-address {
+  font-size: 28rpx;
+  color: #888;
+  flex-grow: 1;
+}
+.arrow-right {
+  width: 24rpx;
+  height: 24rpx;
+  opacity: 0.5;
+}
+
+/* 商品列表 */
+.product-list-section .order-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.product-list-section .order-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.product-list-section .order-item:first-of-type {
+    padding-top: 0;
+}
+
+.order-item .item-image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  background-color: #f0f0f0;
+}
+.order-item .item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.order-item .item-name {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.order-item .item-specs {
+  font-size: 22rpx;
+  color: #888;
+  margin-bottom: 8rpx;
+}
+.order-item .item-price-quantity {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: auto; /* 将价格和数量推到底部 */
+}
+.order-item .item-price {
+  font-size: 28rpx;
+  color: #e64340;
+  font-weight: 500;
+}
+.order-item .item-quantity {
+  font-size: 26rpx;
+  color: #888;
+}
+
+/* 金额明细 */
+.amount-details-section .detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  padding: 15rpx 0;
+}
+.amount-details-section .detail-row .label {
+  color: #666;
+}
+.amount-details-section .detail-row .value {
+  color: #333;
+  font-weight: 500;
+}
+.amount-details-section .detail-row.total-payable .label {
+  font-weight: 500;
+  color: #333;
+}
+.amount-details-section .detail-row .value.strong {
+  font-size: 32rpx;
+  color: #e64340;
+  font-weight: bold;
+}
+
+/* 订单备注 */
+.remarks-section .remarks-input {
+  width: 100%;
+  height: 120rpx;
+  font-size: 26rpx;
+  padding: 15rpx;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  background-color: #fdfdfd;
+}
+
+/* 底部提交栏 */
+.bottom-submit-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* 按钮靠右 */
+  padding: 15rpx 30rpx calc(15rpx + env(safe-area-inset-bottom)) 30rpx;
+  border-top: 1rpx solid #e0e0e0;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.05);
+  z-index: 100;
+}
+.total-amount-display {
+  margin-right: 20rpx;
+  font-size: 28rpx;
+}
+.total-amount-display .label {
+  color: #666;
+}
+.total-amount-display .amount-value {
+  color: #e64340;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.submit-order-btn {
+  background-image: linear-gradient(to right, #ff7a4d, #e64340);
+  color: white;
+  font-size: 30rpx;
+  padding: 0 50rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+.submit-order-btn[disabled] {
+  background-image: none;
+  background-color: #ccc;
+  color: #999;
+  opacity: 0.7;
+}

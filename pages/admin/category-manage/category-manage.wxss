@@ -1,0 +1,174 @@
+.container {
+  padding: 20rpx;
+  font-size: 28rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.add-btn {
+  margin-left: auto;
+}
+
+.loading-tip,
+.empty-tip {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
+}
+
+.category-list {
+  border: 1rpx solid #eee;
+  border-radius: 10rpx;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.category-item:last-child {
+  border-bottom: none;
+}
+
+.category-item.header-row {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.category-item .name {
+  flex: 3;
+  word-break: break-all;
+}
+
+.category-item .sort-order {
+  flex: 1;
+  text-align: center;
+}
+.category-item .sort-input {
+  width: 80rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 5rpx;
+  padding: 5rpx;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.category-item .status {
+  flex: 1.5;
+  text-align: center;
+}
+
+.category-item .status.active {
+  color: #07c160;
+}
+
+.category-item .status.inactive {
+  color: #ee0a24;
+}
+
+.category-item .actions {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  margin-left: 10rpx !important;
+  font-size: 24rpx !important;
+  padding: 0 15rpx !important;
+  line-height: 48rpx !important;
+  height: 48rpx !important;
+}
+
+.action-btn.disable {
+  background-color: #f56c6c !important;
+  color: white !important;
+  border-color: #f56c6c !important;
+}
+
+.action-btn.enable {
+  background-color: #67c23a !important;
+  color: white !important;
+  border-color: #67c23a !important;
+}
+
+.action-btn.edit {
+  background-color: #e6a23c !important;
+  color: white !important;
+  border-color: #e6a23c !important;
+}
+
+.action-btn.delete {
+  background-color: #f56c6c !important;
+  color: white !important;
+  border-color: #f56c6c !important;
+}
+
+/* 新增分类表单样式 */
+.add-category-form {
+  background-color: #f9f9f9;
+  border: 1rpx solid #eee;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  overflow: hidden; /* For smooth transition */
+  max-height: 0; /* Initially collapsed */
+  opacity: 0;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out, margin-bottom 0.3s ease-in-out;
+}
+
+.add-category-form.expanded {
+  max-height: 500rpx; /* Adjust as needed to fit content */
+  opacity: 1;
+  padding: 20rpx; /* Ensure padding is applied when expanded */
+  margin-bottom: 30rpx;
+}
+
+.add-category-form .form-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding: 0; /* Override general category-item padding if any */
+  border-bottom: none; /* Override general category-item border if any */
+}
+
+.add-category-form .label {
+  width: 150rpx;
+  font-size: 28rpx;
+  color: #333;
+  margin-right: 10rpx;
+  text-align: right;
+}
+
+.add-category-form .input {
+  flex: 1;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 10rpx 15rpx;
+  font-size: 28rpx;
+}
+
+.add-category-form .input.short-input {
+  flex: 0.5; /* Shorter input for sortOrder */
+}
+
+.add-category-form switch {
+  margin-left: auto; /* Align switch to the right if label takes space */
+}
+
+.submit-add-btn {
+  margin-top: 10rpx;
+  width: 100%;
+} 

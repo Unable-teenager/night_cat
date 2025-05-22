@@ -1,0 +1,35 @@
+<view class="container carousel-manage-container">
+  <view class="header-actions">
+    <button class="add-btn" type="primary" size="mini" bindtap="navigateToAddCarousel">添加轮播图</button>
+    <!-- <input class="search-input" placeholder="搜索标题/描述" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearchConfirm"/> -->
+  </view>
+
+  <scroll-view scroll-y class="carousel-list-scroll">
+    <block wx:if="{{carousels.length > 0}}">
+      <view class="carousel-item" wx:for="{{carousels}}" wx:key="_id">
+        <image class="carousel-image" src="{{item.imageUrl || '/images/default_carousel.png'}}" mode="aspectFill"></image>
+        <view class="carousel-info">
+          <text class="carousel-title">{{item.title || '无标题'}} (ID: {{item._id}})</text>
+          <text class="carousel-link">链接类型: {{linkTypes[item.linkType] || item.linkType}}</text>
+          <text class="carousel-link" wx:if="{{item.linkValue}}">链接目标: {{item.linkValue}}</text>
+          <text class="carousel-status {{item.isActive ? 'active' : 'inactive'}}">状态: {{item.isActive ? '已启用' : '已禁用'}}</text>
+          <text class="carousel-sort">排序: {{item.sortOrder || 0}}</text>
+        </view>
+        <view class="carousel-actions">
+          <button size="mini" bindtap="navigateToEditCarousel" data-id="{{item._id}}">编辑</button>
+          <button size="mini" type="warn" bindtap="deleteCarousel" data-id="{{item._id}}" data-title="{{item.title || item._id}}">删除</button>
+          <button size="mini" bindtap="toggleCarouselStatus" data-id="{{item._id}}" data-status="{{item.isActive}}">
+            {{item.isActive ? '禁用' : '启用'}}
+          </button>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-list">
+      <image src="/images/icons/empty_carousel.png" class="empty-icon"></image>
+      <text>暂无轮播图，快去添加吧！</text>
+    </view>
+    <!-- Add loading/no-more indicators if pagination is implemented -->
+    <view class="loading-more" wx:if="{{isLoadingMore}}">正在加载更多...</view>
+    <view class="no-more" wx:if="{{!hasMoreCarousels && carousels.length > 0}}">没有更多轮播图了</view>
+  </scroll-view>
+</view> 

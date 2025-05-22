@@ -1,0 +1,101 @@
+<!--pages/community/community.wxml-->
+<view class="page-container">
+  <!-- 搜索栏 -->
+  <view class="search-container">
+    <view class="search-box">
+      <image class="search-icon" src="../../images/search.png"></image>
+      <input class="search-input" placeholder="搜索话题, 问题或人" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearchConfirm"/>
+      <view class="search-btn" bindtap="onSearchConfirm">搜索</view>
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <scroll-view 
+    scroll-y="true" 
+    class="container" 
+    bindscrolltoupper="upper" 
+    upper-threshold="10" 
+    lower-threshold="5" 
+    bindscrolltolower="lower" 
+    scroll-into-view="{{toView}}" 
+    scroll-top="{{scrollTop}}"
+    enable-back-to-top="true"
+    refresher-enabled="true"
+    refresher-triggered="{{isRefreshing}}"
+    bindrefresherrefresh="refreshData">
+    
+    <!-- 加载状态 -->
+    <view class="loading-container" wx:if="{{isLoading}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">正在加载...</text>
+    </view>
+    
+    <!-- 错误状态 -->
+    <view class="error-container" wx:elif="{{hasError}}">
+      <image class="error-icon" src="../../images/error.png" mode="aspectFit"></image>
+      <text class="error-text">加载失败，请重试</text>
+      <view class="error-btn" bindtap="loadData">重新加载</view>
+    </view>
+    
+    <!-- 帖子列表 -->
+    <view class="feed-list" wx:else>
+      <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" wx:key="idx">
+        <view class="feed-item" hover-class="feed-item-hover">
+          <view class="feed-source">
+            <view class="feed-source-left">
+              <view class="avatar">
+                <image src="{{item.feed_source_img}}"></image>
+              </view>
+              <text class="feed-source-name">{{item.feed_source_name}}{{item.feed_source_txt}}</text>
+            </view>
+            <image class="item-more" mode="aspectFit" src="../../images/more.png"></image>
+          </view>
+          <view class="feed-content">
+            <view class="question" bindtap="bindQueTap" data-qid="{{item.question_id}}">
+              <text class="question-text">{{item.question}}</text>
+            </view>
+            <view class="answer-body" bindtap="bindItemTap" data-aid="{{item.answer_id}}">
+              <text class="answer-text">{{item.answer_ctnt}}</text>
+              <view class="answer-actions">
+                <view class="action-item">
+                  <image class="action-icon" src="../../images/like.png" mode="aspectFit"></image>
+                  <text>{{item.good_num}} 赞同</text>
+                </view>
+                <view class="action-item">
+                  <image class="action-icon" src="../../images/comment.png" mode="aspectFit"></image>
+                  <text>{{item.comment_num}} 评论</text>
+                </view>
+                <view class="action-item">
+                  <image class="action-icon" src="../../images/share.png" mode="aspectFit"></image>
+                  <text>分享</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <!-- 加载更多 -->
+      <view class="loading-more" wx:if="{{loadingMore && feed.length > 0}}">
+        <view class="loading-spinner small"></view>
+        <text>加载更多...</text>
+      </view>
+
+      <!-- 无搜索结果显示 -->
+      <view class="no-result" wx:if="{{feed.length === 0}}">
+        <image class="no-result-icon" src="../../images/no-result.png"></image>
+        <text class="no-result-text">暂无相关内容</text>
+        <view class="no-result-btn" bindtap="refreshData" wx:if="{{searchQuery}}">查看全部内容</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 发布帖子按钮 -->
+  <view class="post-btn-container">
+    <view class="post-btn" hover-class="post-btn-hover" bindtap="onPostTap">
+      <view class="post-btn-icon">+</view>
+      <view class="post-btn-text">发帖</view>
+    </view>
+  </view>
+</view>
+

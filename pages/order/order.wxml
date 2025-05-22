@@ -1,0 +1,9 @@
+<view class="order-container">
+  <view class="pending-notice">
+    <image class="pending-icon" src="/images/icons/order.png" mode="aspectFit"></image>
+    <view class="pending-text">
+      <text class="pending-title">待开放</text>
+      <text class="pending-desc">等待获取销售资质后开放</text>
+    </view>
+  </view>
+</view>

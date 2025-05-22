@@ -1,0 +1,140 @@
+page {
+  background-color: #f8f8f8;
+  height: 100%;
+}
+
+.product-manage-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.header-actions {
+  display: flex;
+  padding: 20rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #eee;
+  align-items: center;
+}
+
+.add-btn {
+  margin-right: 20rpx;
+}
+
+.search-input {
+  flex: 1;
+  height: 60rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  background-color: #f7f7f7;
+}
+
+.product-list-scroll {
+  flex-grow: 1;
+  height: calc(100% - 101rpx); /* 减去 header-actions 的高度 */
+}
+
+.product-item {
+  display: flex;
+  background-color: #fff;
+  padding: 20rpx;
+  margin: 20rpx 20rpx 0;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  align-items: center;
+}
+
+.product-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  background-color: #eee;
+}
+
+.product-info {
+  flex: 1;
+  font-size: 24rpx;
+  color: #666;
+  min-width: 0; /* 允许 flex item 收缩 */
+}
+
+.product-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8rpx;
+}
+
+.product-price {
+  color: #ff5000;
+  font-size: 26rpx;
+  margin-right: 15rpx;
+}
+
+.product-stock {
+  margin-right: 15rpx;
+}
+
+.product-status {
+  padding: 4rpx 10rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+}
+
+.product-status.active {
+  background-color: #e6fff0;
+  color: #00b26a;
+}
+
+.product-status.inactive {
+  background-color: #fff0f0;
+  color: #ff4d4f;
+}
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.product-actions button {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  padding: 5rpx 15rpx;
+}
+.product-actions button:first-child {
+  margin-top: 0;
+}
+
+.empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 150rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.empty-icon {
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.6;
+}
+
+.loading-more,
+.no-more {
+  text-align: center;
+  padding: 20rpx;
+  color: #999;
+  font-size: 24rpx;
+} 

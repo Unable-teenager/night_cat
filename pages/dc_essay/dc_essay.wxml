@@ -1,0 +1,35 @@
+<!--Pages/dc_essay/dc_essay-->
+<view class="search-container">
+  <view class="search-box">
+    <image class="search-icon" src="../../images/search.png"></image>
+    <input class="search-input" placeholder="搜索文章" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearchConfirm"/>
+    <view class="search-btn" bindtap="onSearchConfirm">搜索</view>
+  </view>
+</view>
+
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+  <view class="essay-list">
+    <block wx:for="{{essayList}}" wx:key="id">
+      <view class="textimg" bindtap="onEssayTap" data-id="{{item.id}}">
+        <image class="img" mode="aspectFill" src="{{item.imageUrl}}"></image>
+        <view class="essay-info">
+          <view class="text_01">{{item.title}}</view>
+          <view class="essay-desc">{{item.description}}</view>
+          <view class="essay-meta">
+            <text class="essay-author">{{item.author}}</text>
+            <text class="essay-views">{{item.views}} 阅读</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 无搜索结果显示 -->
+    <view class="no-result" wx:if="{{essayList.length === 0}}">
+      <image class="no-result-icon" src="../../images/no-result.png"></image>
+      <text class="no-result-text">暂无相关文章</text>
+    </view>
+  </view>
+</scroll-view>  
+
+
+

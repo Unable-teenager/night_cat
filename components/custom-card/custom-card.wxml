@@ -1,0 +1,34 @@
+<!--components/custom-card/custom-card.wxml-->
+<view class="feed-item {{isVisible ? '' : 'hidden'}}" hover-class="feed-item-hover" bindtap="onCardTap">
+  <view class="feed-source">
+    <view class="feed-source-left">
+      <view class="avatar">
+        <image src="{{item.feed_source_img}}"></image>
+      </view>
+      <text class="feed-source-name">{{item.feed_source_name}}{{item.feed_source_txt}}</text>
+    </view>
+    <image class="item-more" mode="aspectFit" src="../../images/more.png" catchtap="onMoreTap"></image>
+  </view>
+  <view class="feed-content">
+    <view class="question" catchtap="onQuestionTap">
+      <text class="question-text">{{item.question}}</text>
+    </view>
+    <view class="answer-body" catchtap="onAnswerTap">
+      <text class="answer-text">{{item.answer_ctnt}}</text>
+      <view class="answer-actions">
+        <view class="action-item">
+          <image class="action-icon" src="../../images/like.png" mode="aspectFit"></image>
+          <text>{{item.good_num}} 赞同</text>
+        </view>
+        <view class="action-item">
+          <image class="action-icon" src="../../images/comment.png" mode="aspectFit"></image>
+          <text>{{item.comment_num}} 评论</text>
+        </view>
+        <view class="action-item">
+          <image class="action-icon" src="../../images/share.png" mode="aspectFit"></image>
+          <text>分享</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

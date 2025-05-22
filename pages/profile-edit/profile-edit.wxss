@@ -1,0 +1,96 @@
+.edit-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+.form-section {
+  width: 100%;
+  background-color: #fff;
+  padding: 40rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  margin-bottom: 60rpx;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50rpx;
+}
+
+.avatar-preview {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  margin-bottom: 20rpx;
+  background-color: #eee;
+  border: 2rpx solid #ddd;
+}
+
+.change-avatar-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1rpx solid #ccc;
+}
+
+.nickname-section {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.label {
+  width: 120rpx;
+  font-size: 30rpx;
+  color: #555;
+  margin-right: 20rpx;
+}
+
+.nickname-input {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.action-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx; /* For spacing between buttons */
+}
+
+.save-btn,
+.cancel-btn {
+  width: 100%;
+  max-width: 600rpx; /* Consistent with login buttons */
+  height: 90rpx;
+  line-height: 90rpx;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+.save-btn {
+  background-color: #1296db;
+  color: white;
+}
+
+.save-btn[disabled] {
+  background-color: #a0d8f8;
+  color: #e0e0e0;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1rpx solid #ddd;
+} 

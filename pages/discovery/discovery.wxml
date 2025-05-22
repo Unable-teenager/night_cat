@@ -1,0 +1,79 @@
+<!--pages/discovery/discovery.wxml-->
+<!--发现页头部照片轮播-->
+<view class="container">
+    <!-- 加载状态 -->
+    <view class="loading-container" wx:if="{{isLoading}}">
+        <view class="loading"></view>
+    </view>
+
+    <!-- 错误状态 -->
+    <view class="error-container" wx:if="{{hasError && !isLoading}}">
+        <view class="error-message">加载失败，请下拉刷新重试</view>
+    </view>
+
+    <!-- 下拉刷新提示 -->
+    <view class="refresh-tip" wx:if="{{refreshing && !isLoading}}">
+        <view class="refresh-icon"></view>
+        <text>刷新中...</text>
+    </view>
+
+    <!-- 轮播图 -->
+    <swiper class="banner" indicator-dots="true" indicator-color="rgba(255, 255, 255, 0.5)" indicator-active-color="#8cbdb6" autoplay="true" interval="3000" duration="800" circular="true" wx:if="{{!isLoading && !hasError && banners.length > 0}}">
+        <block wx:for="{{banners}}" wx:key="id">
+            <swiper-item>
+                <image src="{{item.imageUrl}}" mode="aspectFill" bindtap="bannerTap" data-url="{{item.linkUrl}}"></image>
+            </swiper-item>
+        </block>
+    </swiper>
+
+    <!-- 内容区域 -->
+    <view class="content" wx:if="{{!isLoading && !hasError}}">
+        <!-- 故事版块 - 现在使用当前索引显示单个故事 -->
+        <view class="story-section">
+            <view class="section-title">
+                <text class="title-text">健康故事</text>
+                <view class="story-indicators">
+                    <view wx:for="{{stories}}" wx:key="index" 
+                          class="story-indicator {{currentStoryIndex === index ? 'active' : ''}}"></view>
+                </view>
+            </view>
+            
+            <view class="view_01" hover-class="view-hover" bindtap="storyTap">
+                <image class="img" mode="aspectFill" src="{{stories[currentStoryIndex].image}}"></image>
+                <view class="story-content">
+                    <view class="text_01">{{stories[currentStoryIndex].title}}</view>
+                    <view class="story-desc">{{stories[currentStoryIndex].description}}</view>
+                </view>
+            </view>
+        </view>
+        
+        <!-- 文章版块 -->
+        <view class="article-section">
+            <view class="section-title">
+                <text class="title-text">热门文章</text>
+                <view class="view-more">查看更多</view>
+            </view>
+            
+            <block wx:for="{{articles}}" wx:key="index">
+                <view class="view_02" hover-class="view-hover" bindtap="articleTap" data-index="{{index}}">
+                    <view class="article-content">
+                        <text class="article-title">{{item.title}}</text>
+                        <text class="article-desc">{{item.content}}</text>
+                        <view class="article-meta">
+                            <text class="article-views">{{item.views || 0}} 浏览</text>
+                        </view>
+                    </view>
+                    <view class="article-image">
+                        <image class="img_2" src="{{item.image}}" mode="aspectFill"></image>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+
+    <!--底部按钮-->
+    <view class="s_view">
+        <button class="essayBtn" hover-class="button-hover" bindtap="gotoPage_eaasy">文章专区</button>
+        <button class="videoBtn" hover-class="button-hover" bindtap="gotoPage_video">视频专区</button>
+    </view>
+</view>

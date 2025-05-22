@@ -1,0 +1,39 @@
+<!--pages/address-list/address-list.wxml-->
+<view class="address-list-container">
+  <!-- 地址为空时的提示 -->
+  <view class="empty-address" wx:if="{{addressList.length === 0}}">
+    <image class="empty-icon" src="/images/icons/empty_address.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无收货地址</text>
+  </view>
+  
+  <!-- 地址列表 -->
+  <view class="address-list" wx:else>
+    <view wx:for="{{addressList}}" wx:key="_id" class="address-item {{item.isDefault ? 'default' : ''}}" 
+          bindtap="selectAddress" data-id="{{item._id}}">
+      <view class="address-info">
+        <view class="name-phone">
+          <text class="name">{{item.name}}</text>
+          <text class="phone">{{item.phone}}</text>
+          <text class="default-tag" wx:if="{{item.isDefault}}">默认</text>
+        </view>
+        <view class="detail-address">
+          {{item.province}}{{item.city}}{{item.district}}{{item.detail}}
+        </view>
+      </view>
+      <view class="address-options">
+        <view class="edit-btn" catchtap="editAddress" data-id="{{item._id}}">
+          <image src="/images/icons/edit.png" mode="aspectFit"></image>
+        </view>
+        <view class="delete-btn" catchtap="deleteAddress" data-id="{{item._id}}">
+          <image src="/images/icons/delete.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 添加新地址按钮 -->
+  <view class="add-address-btn" bindtap="addNewAddress">
+    <image src="/images/icons/add.png" mode="aspectFit"></image>
+    <text>添加新地址</text>
+  </view>
+</view>
