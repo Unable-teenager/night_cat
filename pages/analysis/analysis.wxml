@@ -1,0 +1,83 @@
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="navigateBack">
+      <image src="/images/icons/arrow_right_grey.png" mode="aspectFit" class="back-icon"></image>
+    </view>
+    <text class="header-title">睡眠分析报告</text>
+  </view>
+  <view class="date-selector">
+    <view class="date-nav prev" bindtap="prevDate">
+      <image src="/images/icons/arrow_right_grey.png" mode="aspectFit" class="arrow-left"></image>
+    </view>
+    <text class="current-date">{{currentDate}}</text>
+    <view class="date-nav next" bindtap="nextDate">
+      <image src="/images/icons/arrow_right_grey.png" mode="aspectFit" class="arrow-right"></image>
+    </view>
+  </view>
+  <view class="score-card">
+    <view class="score-circle">
+      <text class="score-value">{{sleepData.qualityScore}}</text>
+    </view>
+    <text class="score-label">睡眠评分</text>
+    <view class="score-description">
+      <text wx:if="{{sleepData.qualityScore >= 80}}">您的睡眠质量非常好</text>
+      <text wx:elif="{{sleepData.qualityScore >= 60}}">您的睡眠质量良好</text>
+      <text wx:elif="{{sleepData.qualityScore >= 40}}">您的睡眠质量一般</text>
+      <text wx:else>您的睡眠质量较差</text>
+    </view>
+  </view>
+  <view class="stats-card">
+    <view class="stats-header">
+      <text class="stats-title">睡眠数据</text>
+    </view>
+    <view class="stats-item">
+      <view class="stats-icon-container">
+        <image src="/images/icons/common_mode.png" mode="aspectFit" class="stats-icon"></image>
+      </view>
+      <text class="stats-label">总睡眠时间</text>
+      <text class="stats-value">{{sleepData.duration}}</text>
+    </view>
+    <view class="stats-item">
+      <view class="stats-icon-container">
+        <image src="/images/icons/common_mode.png" mode="aspectFit" class="stats-icon"></image>
+      </view>
+      <text class="stats-label">深度睡眠</text>
+      <text class="stats-value">{{sleepData.deepSleep}}</text>
+    </view>
+    <view class="stats-item">
+      <view class="stats-icon-container">
+        <image src="/images/icons/common_mode.png" mode="aspectFit" class="stats-icon"></image>
+      </view>
+      <text class="stats-label">浅睡眠</text>
+      <text class="stats-value">{{sleepData.lightSleep}}</text>
+    </view>
+    <view class="stats-item">
+      <view class="stats-icon-container">
+        <image src="/images/icons/common_mode.png" mode="aspectFit" class="stats-icon"></image>
+      </view>
+      <text class="stats-label">夜间清醒次数</text>
+      <text class="stats-value">{{sleepData.awakeTime}}</text>
+    </view>
+  </view>
+  <view class="analysis-card">
+    <view class="analysis-header">
+      <text class="analysis-title">睡眠分析</text>
+    </view>
+    <view class="analysis-content">
+      <view class="analysis-item">
+        <text class="analysis-subtitle">睡眠质量</text>
+        <text class="analysis-text">{{sleepAnalysis.quality}}</text>
+      </view>
+      <view class="analysis-item">
+        <text class="analysis-subtitle">改善建议</text>
+        <text class="analysis-text">{{sleepAnalysis.suggestion}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="chart-card">
+    <view class="chart-header">
+      <text class="chart-title">睡眠趋势</text>
+    </view>
+    <image src="{{chartImage}}" mode="widthFix" class="sleep-chart"></image>
+  </view>
+</view>

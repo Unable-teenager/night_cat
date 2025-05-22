@@ -1,0 +1,249 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20rpx 40rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  width: 40rpx;
+  height: 40rpx;
+  transform: rotate(180deg);
+}
+
+.header-title {
+  width: 100%;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.date-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx 0;
+  width: 100%;
+}
+
+.date-nav {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-left {
+  width: 30rpx;
+  height: 30rpx;
+  transform: rotate(180deg);
+}
+
+.arrow-right {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.current-date {
+  font-size: 32rpx;
+  color: #333;
+  margin: 0 30rpx;
+}
+
+/* Card styles - make all cards consistent */
+.score-card,
+.stats-card,
+.analysis-card,
+.chart-card {
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+  margin-bottom: 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Specific score card styles */
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 30rpx;
+}
+
+.score-circle {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 110rpx;
+  background: linear-gradient(135deg, #8cbdb6, #5a9992);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.score-value {
+  font-size: 80rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.score-label {
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+}
+
+.score-description {
+  font-size: 28rpx;
+  color: #8cbdb6;
+  font-weight: 500;
+}
+
+/* Stats card styles */
+.stats-header {
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 15rpx;
+  width: 100%;
+}
+
+.stats-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.stats-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  width: 100%;
+}
+
+.stats-item:last-child {
+  border-bottom: none;
+}
+
+.stats-icon-container {
+  width: 70rpx;
+  height: 70rpx;
+  background-color: rgba(140, 189, 182, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 25rpx;
+  flex-shrink: 0;
+}
+
+.stats-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.stats-label {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.stats-value {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Analysis card styles */
+.analysis-header {
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 15rpx;
+  width: 100%;
+}
+
+.analysis-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.analysis-content {
+  padding: 10rpx 0;
+  width: 100%;
+}
+
+.analysis-item {
+  margin-bottom: 25rpx;
+  width: 100%;
+}
+
+.analysis-item:last-child {
+  margin-bottom: 0;
+}
+
+.analysis-subtitle {
+  display: block;
+  font-size: 30rpx;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.analysis-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+/* Chart card styles */
+.chart-header {
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 15rpx;
+  width: 100%;
+}
+
+.chart-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.sleep-chart {
+  width: 100%;
+  height: auto;
+} 

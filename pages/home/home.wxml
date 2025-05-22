@@ -1,147 +1,135 @@
-<view class="container {{currentMode}}">
-  <!-- Mode Selector -->
-  <view class="mode-selector">
-    <view class="mode {{currentMode === 'normalMode' ? 'active' : ''}}" bindtap="switchMode" data-mode="normalMode">
-      <view class="icon-normal mode-icon"></view>
+<view class="container">
+  <!-- Tab Bar - Moved to the top -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentMode === 'normalMode' ? 'active' : ''}}" bindtap="switchMode" data-mode="normalMode">
+      <image src="/images/icons/common_mode.png" mode="aspectFit" class="tab-icon"></image>
       <text>普通模式</text>
     </view>
-    <view class="mode {{currentMode === 'lateNightMode' ? 'active' : ''}}" bindtap="switchMode" data-mode="lateNightMode">
-      <view class="icon-late-night mode-icon"></view>
+    <view class="tab-item {{currentMode === 'lateNightMode' ? 'active' : ''}}" bindtap="switchMode" data-mode="lateNightMode">
+      <image src="/images/icons/late_mode.png" mode="aspectFit" class="tab-icon"></image>
       <text>熬夜模式</text>
     </view>
-    <view class="mode {{currentMode === 'recoveryMode' ? 'active' : ''}}" bindtap="switchMode" data-mode="recoveryMode">
-      <view class="icon-recovery mode-icon"></view>
+    <view class="tab-item {{currentMode === 'recoveryMode' ? 'active' : ''}}" bindtap="switchMode" data-mode="recoveryMode">
+      <image src="/images/icons/recover_mode.png" mode="aspectFit" class="tab-icon"></image>
       <text>修复模式</text>
     </view>
   </view>
   <!-- Normal Mode Content -->
   <view class="mode-content" wx:if="{{currentMode === 'normalMode'}}">
-    <view class="chart-container">
-      <picker mode="selector" range="{{['本月', '本周', '本日']}}" value="{{selectedPeriodIndex}}" bindchange="onPeriodChange">
-        <view class="picker-view">
-          <text>{{periods[selectedPeriodIndex]}}</text>
-          <view class="icon-down-arrow"></view>
+    <view class="sleep-card">
+      <view class="sleep-header">
+        <text class="sleep-title">睡眠概览</text>
+        <text class="sleep-date">{{currentDate}}</text>
+      </view>
+      <view class="sleep-score-container">
+        <view class="sleep-score-circle">
+          <text class="sleep-score">{{sleepData.qualityScore}}</text>
         </view>
-      </picker>
-      <image src="{{chartImages[selectedPeriodIndex]}}" mode="widthFix" class="chart-image" />
+        <text class="sleep-score-label">睡眠评分</text>
+      </view>
+      <view class="sleep-details">
+        <view class="sleep-detail-item">
+          <image src="/images/icons/common_mode.png" mode="aspectFit" class="detail-icon"></image>
+          <view class="detail-info">
+            <text class="detail-label">总睡眠时间</text>
+            <text class="detail-value">{{sleepData.duration}}</text>
+          </view>
+        </view>
+        <view class="sleep-detail-item">
+          <image src="/images/icons/common_mode.png" mode="aspectFit" class="detail-icon"></image>
+          <view class="detail-info">
+            <text class="detail-label">深度睡眠</text>
+            <text class="detail-value">{{sleepData.deepSleep}}</text>
+          </view>
+        </view>
+        <view class="sleep-detail-item">
+          <image src="/images/icons/common_mode.png" mode="aspectFit" class="detail-icon"></image>
+          <view class="detail-info">
+            <text class="detail-label">浅睡眠</text>
+            <text class="detail-value">{{sleepData.lightSleep}}</text>
+          </view>
+        </view>
+        <view class="sleep-detail-item">
+          <image src="/images/icons/common_mode.png" mode="aspectFit" class="detail-icon"></image>
+          <view class="detail-info">
+            <text class="detail-label">夜间清醒次数</text>
+            <text class="detail-value">{{sleepData.awakeTime}}</text>
+          </view>
+        </view>
+      </view>
+      <button class="report-btn" bindtap="navigateToAnalysis">查看详细睡眠报告</button>
     </view>
-    <view class="data-card">
-      <view class="data-header">
-        <text class="data-title">睡眠数据</text>
-        <text class="data-date">{{currentDate}}</text>
-      </view>
-      <view class="data-item">
-        <view class="data-icon-container">
-          <view class="icon-quality-score"></view>
-        </view>
-        <text class="label">睡眠质量评分</text>
-        <text class="value score">{{sleepData.qualityScore}}分</text>
-      </view>
-      <view class="data-item">
-        <view class="data-icon-container">
-          <view class="icon-sleep-duration"></view>
-        </view>
-        <text class="label">总睡眠时间</text>
-        <text class="value">{{sleepData.duration}}</text>
-      </view>
-      <view class="data-item">
-        <view class="data-icon-container">
-          <view class="icon-deep-sleep"></view>
-        </view>
-        <text class="label">深度睡眠</text>
-        <text class="value">{{sleepData.deepSleep}}</text>
-      </view>
-      <view class="data-item">
-        <view class="data-icon-container">
-          <view class="icon-light-sleep"></view>
-        </view>
-        <text class="label">浅睡眠</text>
-        <text class="value">{{sleepData.lightSleep}}</text>
-      </view>
-      <view class="data-item">
-        <view class="data-icon-container">
-          <view class="icon-awake-count"></view>
-        </view>
-        <text class="label">夜间清醒次数</text>
-        <text class="value">{{sleepData.awakeTime}}</text>
-      </view>
-    </view>
-    <button class="report-btn" type="primary" bindtap="navigateToAnalysis">查看睡眠数据分析报告</button>
   </view>
   <!-- Late Night Mode Content -->
   <view class="mode-content" wx:if="{{currentMode === 'lateNightMode'}}">
     <view class="late-night-card">
-      <view class="clock-container">
+      <view class="time-display">
         <text class="current-time">{{currentTime}}</text>
-        <text class="screen-time">屏幕使用时长: {{screenTime}}</text>
+        <text class="screen-time">屏幕使用: {{screenTime}}</text>
       </view>
-      <view class="check-in-container">
+      <view class="checkin-section">
         <block wx:if="{{!hasCheckedIn}}">
-          <text class="check-in-reminder">今日还没有打卡！</text>
-          <view class="check-in-buttons">
-            <button class="check-btn wake-up" bindtap="checkInWakeUp">起床打卡</button>
-            <button class="check-btn sleep" bindtap="checkInSleep">睡觉打卡</button>
+          <text class="checkin-reminder">今日还没有打卡！</text>
+          <view class="checkin-buttons">
+            <button class="checkin-btn wakeup" bindtap="checkInWakeUp">起床打卡</button>
+            <button class="checkin-btn sleep" bindtap="checkInSleep">睡觉打卡</button>
           </view>
         </block>
         <block wx:else>
-          <view class="check-in-record">
-            <text>起床时间: {{checkInData.wakeUpTime || '未记录'}}</text>
-            <text>睡觉时间: {{checkInData.sleepTime || '未记录'}}</text>
+          <view class="checkin-records">
+            <view class="checkin-record" wx:if="{{checkInData.wakeUpTime}}">
+              <text class="record-label">起床时间</text>
+              <text class="record-value">{{checkInData.wakeUpTime}}</text>
+            </view>
+            <view class="checkin-record" wx:if="{{checkInData.sleepTime}}">
+              <text class="record-label">睡觉时间</text>
+              <text class="record-value">{{checkInData.sleepTime}}</text>
+            </view>
           </view>
         </block>
       </view>
-      <view class="ai-assistant" wx:if="{{aiTip}}">
-        <view class="icon-ai-assistant ai-avatar"></view>
-        <view class="ai-message">
-          <text>{{aiTip}}</text>
-          <view class="ai-actions" wx:if="{{showAiActions}}">
-            <button class="ai-action-btn accept" bindtap="acceptAiSuggestion">接受</button>
-            <button class="ai-action-btn reject" bindtap="rejectAiSuggestion">暂时不用</button>
-          </view>
+      <view class="ai-suggestion" wx:if="{{aiTip}}">
+        <view class="ai-header">
+          <image src="/images/icons/late_mode.png" mode="aspectFit" class="ai-icon"></image>
+          <text class="ai-title">健康提醒</text>
+        </view>
+        <text class="ai-message">{{aiTip}}</text>
+        <view class="ai-actions" wx:if="{{showAiActions}}">
+          <button class="ai-btn accept" bindtap="acceptAiSuggestion">接受建议</button>
+          <button class="ai-btn reject" bindtap="rejectAiSuggestion">稍后再说</button>
         </view>
       </view>
     </view>
   </view>
   <!-- Recovery Mode Content -->
   <view class="mode-content" wx:if="{{currentMode === 'recoveryMode'}}">
-    <view class="recovery-header">
-      <view class="recovery-title-row">
-        <text class="recovery-title">夜猫修复铺</text>
-        <image src="/images/eula.jpg" class="mascot-image"></image>
+    <view class="recovery-card">
+      <view class="recovery-header">
+        <image src="/images/icons/recover_mode.png" mode="aspectFit" class="recovery-icon"></image>
+        <text class="recovery-title">夜猫修复计划</text>
       </view>
-      <view class="recovery-progress-section">
-        <view class="progress-text-container">
-          <text class="progress-label">修复进度:</text>
+      <view class="progress-section">
+        <view class="progress-header">
+          <text class="progress-label">修复进度</text>
           <text class="progress-value">{{recoveryProgress}}%</text>
         </view>
-        <progress percent="{{recoveryProgress}}" stroke-width="12" color="#8cbdb6" active activeColor="#8cbdb6" class="progress-bar" />
-        <text class="recovery-message">{{recoveryMessage}}</text>
+        <progress percent="{{recoveryProgress}}" stroke-width="14" backgroundColor="#E0E0E0" activeColor="#8cbdb6" class="progress-bar" />
+        <text class="progress-message">{{recoveryMessage}}</text>
       </view>
-    </view>
-    <view class="recovery-checklist-card">
-      <view class="checklist-header">
-        <text class="checklist-title">今日修复任务</text>
-        <text class="checklist-subtitle">
-          已完成 {{completedRecoveryTasks}}/{{recoveryChecklist.length}}
-        </text>
-      </view>
-      <view class="recovery-checklist">
-        <block wx:for="{{recoveryChecklist}}" wx:key="index">
-          <view class="checklist-item {{item.checked ? 'checked' : ''}}" bindtap="toggleChecklistItem" data-index="{{index}}" hover-class="checklist-item-hover" hover-stay-time="100">
-            <view class="checkbox-container">
-              <view class="{{item.checked ? 'icon-checkbox-checked' : 'icon-checkbox'}}"></view>
+      <view class="checklist-section">
+        <view class="checklist-header">
+          <text class="checklist-title">今日修复清单</text>
+          <text class="checklist-counter">
+            {{completedRecoveryTasks}}/{{recoveryChecklist.length}}
+          </text>
+        </view>
+        <view class="checklist">
+          <view class="checklist-item {{item.checked ? 'checked' : ''}}" wx:for="{{recoveryChecklist}}" wx:key="index" bindtap="toggleChecklistItem" data-index="{{index}}">
+            <view class="checkbox {{item.checked ? 'checked' : ''}}">
+              <view class="checkbox-inner" wx:if="{{item.checked}}"></view>
             </view>
             <text class="checklist-text">{{item.text}}</text>
           </view>
-        </block>
-      </view>
-    </view>
-    <view class="recovery-recommendations-section" wx:if="{{recoveryRecommendations.length > 0}}">
-      <text class="recommendations-title">修复建议</text>
-      <view class="recommendation-items">
-        <view class="recommendation-item" wx:for="{{recoveryRecommendations}}" wx:key="id" bindtap="openRecommendation" data-id="{{item.id}}" hover-class="recommendation-item-hover">
-          <image src="{{item.image || '/images/eula.jpg'}}" mode="aspectFill" class="recommendation-image"></image>
-          <text class="recommendation-title">{{item.title}}</text>
         </view>
       </view>
     </view>

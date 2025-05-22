@@ -284,7 +284,7 @@ Page({
 			},
 			fail: (err) => {
 				console.error("导航到分析页面失败:", err);
-				
+
 				// 尝试使用reLaunch作为备选方案
 				wx.reLaunch({
 					url: "/pages/analysis/analysis",
@@ -484,7 +484,6 @@ Page({
 							this.setData({
 								currentMode: "recoveryMode",
 							});
-							this.generateRecoveryRecommendations();
 						}
 					},
 				});
@@ -498,62 +497,13 @@ Page({
 	},
 
 	acceptAiSuggestion() {
-		// Show activity tutorial based on current time
-		const now = new Date();
-		const hours = now.getHours();
-
-		let tutorial;
-
-		if (hours >= 22 || hours < 6) {
-			// Night time - eye protection
-			tutorial = {
-				title: "夜间护眼活动",
-				videoUrl: "https://example.com/videos/eye_protection.mp4",
-				description:
-					"这套简单的护眼活动可以减轻眼睛疲劳，缓解视力压力，特别适合夜间长时间用眼。",
-				steps: [
-					{
-						image: "/images/eye_step1.png",
-						text: "双手搓热后轻轻按压眼睛周围，每次20秒",
-					},
-					{
-						image: "/images/eye_step2.png",
-						text: "远眺窗外或远处6秒，然后看近处物体6秒，重复5次",
-					},
-					{
-						image: "/images/eye_step3.png",
-						text: "闭眼休息30秒，让眼睛完全放松",
-					},
-				],
-			};
-		} else {
-			// Day time - stretching
-			tutorial = {
-				title: "办公活动放松",
-				videoUrl: "https://example.com/videos/office_stretch.mp4",
-				description:
-					"这套简单的拉伸活动可以在办公室或学习间隙进行，帮助放松身体，缓解久坐带来的不适。",
-				steps: [
-					{
-						image: "/images/stretch_step1.png",
-						text: "伸展手臂，向上拉伸全身",
-					},
-					{
-						image: "/images/stretch_step2.png",
-						text: "颈部左右旋转，每侧15秒",
-					},
-					{
-						image: "/images/stretch_step3.png",
-						text: "腕部旋转，缓解打字疲劳",
-					},
-				],
-			};
-		}
-
 		this.setData({
-			showActivityTutorial: true,
-			activityTutorial: tutorial,
 			showAiActions: false,
+		});
+
+		wx.showToast({
+			title: "感谢接受建议",
+			icon: "success",
 		});
 	},
 
@@ -594,41 +544,31 @@ Page({
 			{ text: "20分钟黄金小睡", checked: false },
 			{ text: "散步10分钟", checked: false },
 			{ text: "今日远离咖啡因", checked: false },
-			{ text: "20分钟黄金小睡", checked: false },
-			{ text: "散步10分钟", checked: false },
-			{ text: "今日远离咖啡因", checked: false },
+			{ text: "保持充分水分摄入", checked: false },
+			{ text: "不晚于22点睡觉", checked: false },
+			{ text: "睡前1小时避免电子设备", checked: false },
 		];
-
-		// Initialize with mock data
-		this.setData({
-			recoveryProgress: 0,
-			recoveryMessage: "修复刚刚开始，请继续坚持！",
-			recoveryChecklist: defaultChecklist,
-			completedRecoveryTasks: defaultChecklist.filter((item) => item.checked)
-				.length,
-		});
 
 		// Load saved checklist data if exists
 		const savedChecklist = wx.getStorageSync("recoveryChecklist");
 		if (savedChecklist && savedChecklist.length > 0) {
 			this.setData({
 				recoveryChecklist: savedChecklist,
-				completedRecoveryTasks: savedChecklist.filter((item) => item.checked)
-					.length,
 			});
-
-			// Calculate progress based on checked items
-			this.calculateRecoveryProgress();
 		} else {
-			this.calculateRecoveryProgress();
+			this.setData({
+				recoveryChecklist: defaultChecklist,
+			});
 		}
+
+		// Calculate progress based on checked items
+		this.calculateRecoveryProgress();
 	},
 
-	// New function to handle checklist item toggling
+	// Handle checklist item toggling
 	toggleChecklistItem(e) {
 		try {
-			const index = Number.parseInt(e.currentTarget.dataset.index, 10); // Ensure index is a number
-			console.log("Toggling checklist item. Clicked index:", index);
+			const index = Number.parseInt(e.currentTarget.dataset.index, 10);
 
 			// Validate index
 			if (
@@ -636,12 +576,6 @@ Page({
 				index < 0 ||
 				index >= this.data.recoveryChecklist.length
 			) {
-				console.error(
-					"Invalid index or checklist data issue. Index:",
-					index,
-					"Checklist:",
-					this.data.recoveryChecklist,
-				);
 				wx.showToast({
 					title: "操作失败，请稍后重试",
 					icon: "none",
@@ -649,17 +583,12 @@ Page({
 				return;
 			}
 
-			const oldChecklist = this.data.recoveryChecklist;
-			const newChecklist = oldChecklist.map((item, idx) => {
+			const newChecklist = this.data.recoveryChecklist.map((item, idx) => {
 				if (idx === index) {
-					// Create a new object for the toggled item with the updated 'checked' status
 					return { ...item, checked: !item.checked };
 				}
-				return item; // Return the original item if it's not the one being toggled
+				return item;
 			});
-
-			console.log("Original item state:", oldChecklist[index]);
-			console.log("New item state:", newChecklist[index]);
 
 			this.setData({
 				recoveryChecklist: newChecklist,
@@ -684,8 +613,6 @@ Page({
 				title: "发生错误，请重试",
 				icon: "none",
 			});
-			// Optionally, re-initialize data to a safe state
-			// this.initRecoveryData();
 		}
 	},
 

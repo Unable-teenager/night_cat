@@ -1,0 +1,7 @@
+{
+	"usingComponents": {},
+	"navigationBarTitleText": "睡眠分析报告",
+	"navigationBarBackgroundColor": "#8cbdb6",
+	"navigationBarTextStyle": "white",
+	"enablePullDownRefresh": false
+}
