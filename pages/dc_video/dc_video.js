@@ -13,8 +13,8 @@ Page({
       name: '苏苏',
       num: '1',
       title: '测试数据测试测试测试测测试数据测试测试测试测测试数据测试测试测试测测试数据测试测试测试测',
-      url: 'https://ts1.tc.mm.bing.net/th/id/R-C.583d5c51dd956b0436232109a72478e6?rik=%2bQmK5PcTRPbfuw&riu=http%3a%2f%2fseopic.699pic.com%2fphoto%2f50110%2f4032.jpg_wh1200.jpg&ehk=4p4GBVGKpjXKtvvKqJrQvD3Bkqq4ESSjSRKhA63TLio%3d&risl=&pid=ImgRaw&r=0',
-      avatar: 'https://ts1.tc.mm.bing.net/th/id/R-C.583d5c51dd956b0436232109a72478e6?rik=%2bQmK5PcTRPbfuw&riu=http%3a%2f%2fseopic.699pic.com%2fphoto%2f50110%2f4032.jpg_wh1200.jpg&ehk=4p4GBVGKpjXKtvvKqJrQvD3Bkqq4ESSjSRKhA63TLio%3d&risl=&pid=ImgRaw&r=0'
+      url: 'https://img.wxcha.com/m00/86/59/7c6242363084072b82b6957cacc335c7.jpg',
+      avatar: 'https://img.wxcha.com/m00/86/59/7c6242363084072b82b6957cacc335c7.jpg'
     },
   
   /**
@@ -36,9 +36,9 @@ Page({
       const list = [];
       
       // 示例数据
-      for (let i = 1; i <= 10; i++) {
+      for (let i = 1; i <= 4; i++) {
         list.push({
-          url: "https://img.wxcha.com/m00/86/59/7c6242363084072b82b6957cacc335c7.jpg",
+          url: "https://ts1.tc.mm.bing.net/th/id/R-C.583d5c51dd956b0436232109a72478e6?rik=%2bQmK5PcTRPbfuw&riu=http%3a%2f%2fseopic.699pic.com%2fphoto%2f50110%2f4032.jpg_wh1200.jpg&ehk=4p4GBVGKpjXKtvvKqJrQvD3Bkqq4ESSjSRKhA63TLio%3d&risl=&pid=ImgRaw&r=0",
           avatar: "https://img.wxcha.com/m00/86/59/7c6242363084072b82b6957cacc335c7.jpg",
           title: "视频标题" + i,
           name: "作者" + i,
